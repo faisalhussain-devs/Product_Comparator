@@ -258,5 +258,5 @@ def labelling_data():
         for item in final_results:
             f.write(json.dumps(item) + '\n')
     print(f"Processing finished. Final stabilized labels saved to '{OUTPUT_FILE}'.")
-
+    return final_results, THRESHOLD
 labelling_data()

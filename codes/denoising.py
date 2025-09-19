@@ -1,15 +1,50 @@
-import torch
-from transformers import AutoModelForSequenceClassification, Trainer, TrainingArguments, DistilBertTokenizer
+from transformers import AutoModelForSequenceClassification, Trainer, TrainingArguments, AutoTokenizer
 import numpy as np
 from sklearn.metrics import mean_squared_error, confusion_matrix
 from scipy.stats import spearmanr
 import torch.nn as nn
+import pandas as pd
+from datasets import Dataset
+from labelling_data import labelling_data
+
+def load_gemini_labeled_data(results_list, threshold=None):
+    df = pd.DataFrame(results_list) 
+    df = df.dropna(subset=["text", "score"])
+
+    if threshold is not None:
+        df = df[df["score"] >= threshold]
+    
+    lengths = df["text"].apply(lambda x: len(x.split()))
+    print("99th percentile length:", lengths.quantile(0.99))
+    print("Max length:", lengths.max())
+    print("Dataset size after filtering:", len(df))
+    
+    return Dataset.from_pandas(df, preserve_index=False)
+
+def tokenize_and_collate(dataset, tokenizer, max_length=512):
+    # here max_length is chosen as 512 token around 350 words, check the max length of reviews in your reviews text
+    def tokenize_batch(batch, default_weight=1.0):
+        tokenized = tokenizer(
+            batch['text'], 
+            padding='max_length', 
+            truncation=True, 
+            max_length=max_length
+        )
+        tokenized['labels'] = batch['usefulness_score']
+        tokenized['weights'] = [ 
+            w if w is not None else default_weight
+    for w in batch.get("confidence_score", [default_weight] * len(batch["text"]))
+]
+        return tokenized
+    
+    tokenized_dataset = dataset.map(tokenize_batch, batched=True)
+    tokenized_dataset.set_format(type='torch', columns=['input_ids', 'attention_mask', 'labels', 'weights'])
+    return tokenized_dataset
 
 Review_Rank_model = AutoModelForSequenceClassification.from_pretrained(
     "distilbert-base-uncased", 
     num_labels=1
 )
-
 def compute_metrics(eval_pred, threshold=5):
     logits, labels = eval_pred
     mse = mean_squared_error(labels, logits)
@@ -18,26 +53,12 @@ def compute_metrics(eval_pred, threshold=5):
     pred_class = (np.array(logits) >= threshold)
     labels_class = (np.array(labels) >= threshold)
     cm = confusion_matrix(labels_class, pred_class)
+    
     return {
         "mse": mse,
         "spearman": spearman_corr,
         "confusion_matrix": cm.tolist()
     }
-
-batch = [
-  {"input_ids": [101, 2023, 2003, 102], "attention_mask": [1,1,1,1], "labels": 4.7, "confidence": 0.9},
-  {"input_ids": [101, 2054, 2003, 102], "attention_mask": [1,1,1,1], "labels": 2.3, "confidence": 0.7},
-  {"input_ids": [101, 2023, 2003, 102], "attention_mask": [1,1,1,1], "labels": 4.7, "confidence": 0.9},
-  {"input_ids": [101, 2054, 2003, 102], "attention_mask": [1,1,1,1], "labels": 2.3, "confidence": 0.7},
-]
-# example of dataset after gemini labelling
-
-def data_tensor_fn(batch):
-    input_ids = torch.tensor([x["input_ids"] for x in batch])
-    attention_mask = torch.tensor([x["attention_mask"] for x in batch])
-    labels = torch.tensor([x["labels"] for x in batch], dtype=torch.float)
-    weights = torch.tensor([x.get("confidence", 1.0) for x in batch], dtype=torch.float)
-    return {"input_ids": input_ids, "attention_mask": attention_mask, "labels": labels, "weights": weights}
 
 class WeightedMSELoss(nn.Module):
     def __init__(self):
@@ -58,6 +79,20 @@ def compute_loss(Review_Rank_model, inputs, return_outputs=False):
     loss_fn = WeightedMSELoss()
     loss = loss_fn(labels, logits, weights)
     return (loss, outputs) if return_outputs else loss
+
+results, threshold = labelling_data()
+print("Threshold:", threshold)
+print("First review:", results[0])
+data = load_gemini_labeled_data(results_list=results, threshold=threshold)
+tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
+
+data = data.shuffle(seed=42)
+train_val = data.train_test_split(test_size=0.2, seed=42) 
+train_data = train_val["train"]
+val_data = train_val["test"]
+
+tokenized_train = tokenize_and_collate(train_data, tokenizer, max_length=512)  # do experiments for 99% percentile length of text or max length
+tokenized_val   = tokenize_and_collate(val_data, tokenizer, max_length=512)
 
 training_args = TrainingArguments(
     output_dir="./results/denoise_bert",
@@ -80,10 +115,10 @@ training_args = TrainingArguments(
 trainer = Trainer(
     model=Review_Rank_model,
     args=training_args,
-    train_dataset=train_data,
-    eval_dataset=val_data,
+    train_dataset=tokenized_train,
+    eval_dataset=tokenized_val,
     compute_metrics=compute_metrics,
-    tokenizer=DistilBertTokenizer,
-    data_collator=data_tensor_fn,
+    tokenizer=tokenizer,
+    data_collator=tokenize_and_collate,
     compute_loss=compute_loss
 )
