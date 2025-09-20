@@ -8,47 +8,6 @@ import pandas as pd
 import sqlite3
 import numpy as np
 
-
-API_KEY = os.getenv("GOOGLE_API_KEY")
-MODEL_NAME = "gemini-2.5-pro-latest"
-REQUESTS_PER_MINUTE = 5
-SECONDS_TO_WAIT = 60 / REQUESTS_PER_MINUTE
-BATCH_SIZE = 15
-MAX_ITERATIONS = 10  
-MIN_ITERATIONS = 5   
-CONVERGENCE_THRESHOLD = 0.25 
-THRESHOLD = 0
-NON_CONVERGENCE_PENALTY = 0.5
-DB_PATH = "your_database_name.db"
-TABLE_NAME = "reviews_table"
-OUTPUT_FILE = "labeled_reviews_final.jsonl"
-FAILED_BATCHES_FILE = "failed_batches.jsonl"
-
-
-PROMPT_TEMPLATE = """
-You are an expert AI Product Analyst. Your task is to analyze a batch of customer reviews for a single product. For each review, you will score its usefulness, classify its type, and finally, provide an overall usefulness threshold for the batch.
-
-**Task Definition:**
-1.  **Score Usefulness:** Assign a `usefulness_score` on a **floating-point scale from 0.0 to 10.0 based on how useful the review is for analyzing a product. The better the review is the higher the score**.
-2.  **Determine Threshold:** After analyzing all reviews, provide a single `usefulness_threshold` score. Reviews scoring below this are generally not useful.
-
-**Input Format:**
-You will be provided a JSON array of review objects. Each object has a unique `id` and `review_text`.
-
-**Output Format:**
-Your response MUST be a single, valid JSON object with TWO top-level keys:
-1.  `usefulness_threshold`: A single float number.
-2.  `review_analysis`: An array of objects, where each object contains:
-    - `id`: The original review ID.
-    - `usefulness_score`: The calculated score (float).
-
-Do not include any other text, greetings, or explanations outside of this JSON structure.
-
-**Analyze the following batch of reviews:**
-{reviews_json}
-"""
-
-
 def get_reviews_from_db(db_path, table_name):
     try:
         conn = sqlite3.connect(db_path)
@@ -257,6 +216,70 @@ def labelling_data():
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         for item in final_results:
             f.write(json.dumps(item) + '\n')
+        f.write(json.dumps({"threshold": THRESHOLD}) + '\n')
     print(f"Processing finished. Final stabilized labels saved to '{OUTPUT_FILE}'.")
+    
     return final_results, THRESHOLD
-labelling_data()
+
+if __name__ == "__main__":
+    API_KEY = os.getenv("AIzaSyAcldLQwcX-xYMah3GP3_gboOvjpSByVzY")
+    MODEL_NAME = "gemini-2.5-pro-latest"
+    REQUESTS_PER_MINUTE = 5
+    SECONDS_TO_WAIT = 60 / REQUESTS_PER_MINUTE
+    BATCH_SIZE = 15
+    MAX_ITERATIONS = 10  
+    MIN_ITERATIONS = 5   
+    CONVERGENCE_THRESHOLD = 0.25 
+    THRESHOLD = 0
+    NON_CONVERGENCE_PENALTY = 0.5
+    DB_PATH = "your_database_name.db"
+    TABLE_NAME = "reviews_table"
+    OUTPUT_FILE = "labeled_reviews_final.jsonl"
+    FAILED_BATCHES_FILE = "failed_batches.jsonl"
+    PROMPT_TEMPLATE = """
+    You are an expert AI Product Analyst. Your task is to analyze a batch of customer reviews for a single product. For each review, you will score its usefulness, classify its type, and finally, provide an overall usefulness threshold for the batch.
+
+    **Task Definition:**
+    1.  **Score Usefulness:** Assign a `usefulness_score` on a **floating-point scale from 0.0 to 10.0 based on how useful the review is for analyzing a product. The better the review is the higher the score**.
+    2.  **Determine Threshold:** After analyzing all reviews, provide a single `usefulness_threshold` score. Reviews scoring below this are generally not useful.
+
+    **Input Format:**
+    You will be provided a JSON array of review objects. Each object has a unique `id` and `review_text`.
+
+    **Output Format:**
+    Your response MUST be a single, valid JSON object with TWO top-level keys:
+    1.  `usefulness_threshold`: A single float number.
+    2.  `review_analysis`: An array of objects, where each object contains:
+        - `id`: The original review ID.
+        - `usefulness_score`: The calculated score (float).
+
+    Do not include any other text, greetings, or explanations outside of this JSON structure.
+
+    **Analyze the following batch of reviews:**
+    {reviews_json}
+    """
+    with open("data/sample_reviews.json", "r", encoding="utf-8") as f:
+        sample_reviews = json.load(f)
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute(f"""
+    CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
+        id INTEGER PRIMARY KEY,
+        review_text TEXT NOT NULL
+    )
+    """)
+
+    cursor.executemany(
+        f"INSERT OR IGNORE INTO {TABLE_NAME} (id, review_text) VALUES (:id, :review_text)", 
+        sample_reviews
+    )
+
+    conn.commit()
+    conn.close()
+
+    conn = sqlite3.connect(DB_PATH)
+    df = pd.read_sql_query(f"SELECT * FROM {TABLE_NAME}", conn)
+    conn.close()
+
+    labelling_data()

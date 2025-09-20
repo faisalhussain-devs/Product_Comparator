@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from label_data import bootstrap_mean_ci
+from codes.labelling_data import bootstrap_mean_ci
 
 def test_bootstrap_mean_ci_standard():
     rng = np.random.default_rng(42)

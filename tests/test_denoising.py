@@ -3,7 +3,7 @@ from torch import nn
 import pytest
 import pandas as pd
 from datasets import Dataset
-from codes.denoising import load_gemini_labeled_data, tokenize_and_collate, WeightedMSELoss, compute_loss
+from codes.denoising_trainer import load_gemini_labeled_data, tokenize_and_collate, WeightedMSELoss, compute_loss
 from transformers import DistilBertTokenizer
 from types import SimpleNamespace
 tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
@@ -29,7 +29,7 @@ def test_load_gemini_labeled_data_basic():
     dataset = load_gemini_labeled_data(results_list, threshold=5.0)
     assert len(dataset) == 3
     for row in dataset:
-        assert row["score"] >= 5.0
+        assert row["usefulness_score"] >= 5.0
     assert isinstance(dataset, Dataset)
     for col in ["text", "usefulness_score", "confidence_score"]:
         assert col in dataset.column_names
@@ -59,8 +59,9 @@ def test_tokenize_and_collate_basic():
     for row in tokenized_dataset:
         assert row['input_ids'].shape[0] == 16
         assert row['attention_mask'].shape[0] == 16
-        assert isinstance(row['labels'], float)
-        assert isinstance(row['weights'], float)
+        assert row['labels'].dtype in (torch.float32, torch.float64) 
+        assert row['weights'].dtype in (torch.float32, torch.float64)
+
 
 def test_tokenize_and_collate_missing_weights():
     """
@@ -183,10 +184,9 @@ def test_compute_loss_scalar_output():
 
     model = DummyModel(outputs=torch.tensor([1.5, 2.5]))
     loss_fn = WeightedMSELoss()
-    loss = compute_loss(model, batch, loss_fn)
-
+    loss, _ = compute_loss(model, batch, loss_fn)
     assert torch.is_tensor(loss)
-    assert loss.dim() == 0  # scalar
+    assert loss.dim() == 0
 
 def test_compute_loss_decreases_when_predictions_match_labels():
     """Makes the same fake batch (labels = [1.0, 2.0]).
