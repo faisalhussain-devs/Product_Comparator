@@ -1,7 +1,6 @@
 import json
 import pandas as pd
 import re
-from youtube_data.youtube import process_transcript
 
 def clean_value(value: str) -> str:
     """Clean and normalize string values in one go."""
@@ -36,6 +35,48 @@ def clean_value(value: str) -> str:
     return value
 
 
+def process_transcript(sentences, target_words=30):
+    """
+    Combine consecutive sentences to get chunks with total words closest to target_words.
+    
+    Args:
+        sentences (list of str): List of sentences.
+        target_words (int): Desired number of words per chunk.
+        
+    Returns:
+        List of combined sentence chunks.
+    """
+    chunks = []
+    current_chunk = []
+    current_count = 0
+
+    for sentence in sentences:
+        word_count = len(sentence.split())
+        if word_count == 0:
+            continue
+
+        if not current_chunk:
+            current_chunk.append(sentence)
+            current_count += word_count
+        else:
+            dist_without = abs(target_words - current_count)
+            dist_with = abs(target_words - (current_count + word_count))
+            
+            if dist_with <= dist_without:
+                current_chunk.append(sentence)
+                current_count += word_count
+            else:
+                chunks.append(" ".join(current_chunk))
+                current_chunk = [sentence]
+                current_count = word_count
+
+    if current_chunk:
+        chunks.append(" ".join(current_chunk))
+
+    return chunks
+
+
+
 def preprocess_sentences(text, target_words=30):
     """
     Preprocess text into sentence chunks close to target_words.
@@ -55,7 +96,7 @@ def preprocess_sentences(text, target_words=30):
     processed_chunks = []
     for sentence in text:  
         cleaned_chunk = []
-        raw_sentences = [s.strip() for s in re.split(r'[.!?]', sentence) if s.strip()]
+        raw_sentences = [s.strip() for s in re.split(r'[.!?*#•]', sentence) if s.strip()]
         for raw_sentence in raw_sentences:
             raw_sentence = clean_value(raw_sentence)
             cleaned = re.sub(r'^[^a-zA-Z0-9]+', '', raw_sentence)
@@ -171,7 +212,7 @@ DROP_COLUMNS = [
 
 
 if __name__ == "__main__":
-    input_path = "E:/Product Comparator/data/product_data.json"
-    output_path = "E:/Product Comparator/data/product_data_cleaned.json"
+    input_path =r"E:\Product Comparator\data\reddit_product_site_data\data_json\product_data.json"
+    output_path = r"E:\Product Comparator\data\reddit_product_site_data\data_json\product_data_cleaned.json"
     preprocess_products(input_path, output_path, drop_columns=DROP_COLUMNS)
     print(f"Cleaned data saved to {output_path}")
