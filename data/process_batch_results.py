@@ -48,8 +48,8 @@ def parse_and_summarize_batch_results(results_filepath: Path, output_json_path: 
                 original_review_data = json.loads(original_review_json_str)
                 review_id = original_review_data.get("id")
                 review_text = original_review_data.get("review_text")
-                if len(review_text.split()) >= 100:
-                    if usefulness_score >= 9:
+                if len(review_text.split()) >= 0:
+                    if usefulness_score >= 6:
                         c += 1
                 all_results.append({
                     "id": review_id,
