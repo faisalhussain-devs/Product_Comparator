@@ -1,8 +1,8 @@
 import json, re
 from pathlib import Path
 
-INPUT_PATH = Path(r"E:\Product Comparator\aspect_analysis\final_aspa_data.json")
-CLEANED_PATH = Path(r"E:\Product Comparator\aspect_analysis\final_aspa_data_cleaned.json")
+INPUT_PATH = Path(r"E:\Product Comparator\final_aspa_data_with_sentiments.json")
+CLEANED_PATH = Path(r"E:\Product Comparator\final_aspa_data_cleaned_with_sentiments.json")
 
 with open(INPUT_PATH, "r", encoding="utf-8") as f:
     data = json.load(f)
@@ -14,7 +14,7 @@ def clean_label(label):
     return label
 
 for sample in data:
-    sample["label"] = sorted(list(set(clean_label(lbl) for lbl in sample["label"])))
+    sample["sentiments"] = {clean_label(lbl): sentiment for lbl, sentiment in sample["sentiments"].items()}
 
 with open(CLEANED_PATH, "w", encoding="utf-8") as f:
     json.dump(data, f, indent=2, ensure_ascii=False)
