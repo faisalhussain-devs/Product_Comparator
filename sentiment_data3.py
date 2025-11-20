@@ -1,209 +1,295 @@
 label_merge_map = {
-    # --- Standalone Labels (No Change) ---
-    "Pricing, Value, & Cost | Overall Value, Deals, & Trade-ins": [
-        "Pricing, Value, & Cost | Overall Value, Deals, & Trade-ins"
-    ],
-    "Build Quality, Design, & Ergonomics | Overall Build, Design, Durability, & Ergonomics": [
-        "Build Quality, Design, & Ergonomics | Overall Build, Design, Durability, & Ergonomics"
-    ],
-    "Battery, Charging, & Power | Battery Life, Health, & Drain": [
-        "Battery, Charging, & Power | Battery Life, Health, & Drain"
-    ],
-    "Camera Quality, Features, & Performance | Overall Camera Quality, Zoom, & Low Light Performance": [
-        "Camera Quality, Features, & Performance | Overall Camera Quality, Zoom, & Low Light Performance"
-    ],
-    "Software, OS, & User Experience | Software Updates & Support Longevity": [
-        "Software, OS, & User Experience | Software Updates & Support Longevity"
-    ],
-    "Battery, Charging, & Power | Detailed Battery & Power Attributes": [
-        "Battery, Charging, & Power | Detailed Battery & Power Attributes"
-    ],
-    "Battery, Charging, & Power | Charging Speed & Performance": [
-        "Battery, Charging, & Power | Charging Speed & Performance"
-    ],
-    "Display & Screen | Overall Display Quality, Resolution, & Touchscreen": [
-        "Display & Screen | Overall Display Quality, Resolution, & Touchscreen"
-    ],
-    "Features & Functionality | SIM & Storage Expansion (SD/eSIM)": [
-        "Features & Functionality | SIM & Storage Expansion (SD/eSIM)"
-    ],
-    "Features & Functionality | RAM & Storage Capacity": [
-        "Features & Functionality | RAM & Storage Capacity"
-    ],
-    "Display & Screen | Display Refresh Rate": [
-        "Display & Screen | Display Refresh Rate"
-    ],
-    "Features & Functionality | Audio & Speaker Quality": [
-        "Features & Functionality | Audio & Speaker Quality"
-    ],
-    "Battery, Charging, & Power | Battery Capacity / Size (mAh)": [
-        "Battery, Charging, & Power | Battery Capacity / Size (mAh)"
-    ],
-    "Compared | Display Refresh Rate Comparisons": [
-        "Compared | Display Refresh Rate Comparisons"
-    ],
-    "Compared | Thermal Performance & Cooling Comparisons": [
-        "Compared | Thermal Performance & Cooling Comparisons"
+
+    #   PRICE & VALUE
+    "Price & Value | Value for Money & Deals": [
+        "Pricing, Value, & Cost | Overall Value, Deals, & Trade-ins",
+        "Pricing, Value, & Cost | Price by Storage/RAM Variant",
+        "Pricing, Value, & Cost | Detailed Pricing, Costs, & Purchase Factors",
     ],
 
-    # --- Merged Labels (With Fix) ---
-    
-    "Software, OS, & User Experience | Detailed Software Features, Apps, & System Behaviors": [
-        "Software, OS, & User Experience | Detailed Software Features, Apps, & System Behaviors",
-        "Software, OS, & User Experience | Notifications, Widgets, & App Management",
-        "Software, OS, & User Experience | Bloatware & Advertisements (Software)",
-        "Software, OS, & User Experience | Software Customization & Flexibility (General)",
-        "Software, OS, & User Experience | Multitasking & Window Management",
-        "Software, OS, & User Experience | System Navigation (Gestures & Buttons)",
-        "Software, OS, & User Experience | Software Bugs & Glitches",
-        "Software, OS, & User Experience | Keyboard (Software Experience)",
-        "Software, OS, & User Experience | AI Assistants (Siri / Apple Intelligence)",
-        "Software, OS, & User Experience | Bootloader & Device Unlocking",
-        "Software, OS, & User Experience | App & Software Compatibility",
-        "Software, OS, & User Experience | Volume Control (Software)",
-        "Software, OS, & User Experience | Home Screen Customization & Layout",
-        "Software, OS, & User Experience | Clipboard & Text Selection",
-        "Software, OS, & User Experience | Display Refresh Rate & Resolution Settings",
-        "Software, OS, & User Experience | Brightness Control (Software)",
-        "Software, OS, & User Experience | Battery Indicator (UI)",
-        "Software, OS, & User Experience | Control Center Customization",
-        "Software, OS, & User Experience | eSIM Management (Software)",
-        "Software, OS, & User Experience | Battery Optimization & Management (Software)",
-        "Software, OS, & User Experience | Watch Faces & Customization"
+    "Price & Value | Repair & Replacement Costs": [
+        "Pricing, Value, & Cost | Repair & Replacement Costs",
     ],
-    "Features & Functionality | Detailed Device Features & Functionality": [
-        "Features & Functionality | Detailed Device Features & Functionality",
-        "Features & Functionality | General Feature Assessment",
-        "Features & Functionality | USB-C / Charging Port & Video Out",
-        "Features & Functionality | Headphone Jack",
-        "Features & Functionality | S Pen (General Support & Experience)",
-        "Features & Functionality | MagSafe Compatibility & Charging",
-        "Features & Functionality | Physical Camera Button",
-        "Features & Functionality | Portability & Travel Use",
-        "Features & Functionality | Included Charger (In-Box)",
-        "Features & Functionality | Health Sensors & Monitoring",
-        "Features & Functionality | S Pen Bluetooth Features",
-        "Features & Functionality | Network Bands & Carrier Support",
-        "Features & Functionality | NFC (Near Field Communication)",
-        "Features & Functionality | Wi-Fi Standards (Wi-Fi 6/6E/7)",
-        "Features & Functionality | Satellite Connectivity & SOS",
-        "Features & Functionality | Device Modes (Dex, Gaming, Power Saver)",
-        "Features & Functionality | Keyboard Accessories & Support",
-        "Features & Functionality | Ultra Wideband (UWB)",
-        "Features & Functionality | Stylus Compatibility (Apple Pencil / Wacom)"
-    ],
-    "Device Performance, Hardware, & Connectivity | Overall Performance, Processor, Gaming, & Thermals": [
-        "Device Performance, Hardware, & Connectivity | Overall Performance, Processor, Gaming, & Thermals",
-        "Device Performance, Hardware, & Connectivity | General Overheating",
-        "Device Performance, Hardware, & Connectivity | Heating During Charging"
-    ],
-    "Device Performance, Hardware, & Connectivity | Detailed Performance, Specs, & Functionality": [
-        "Device Performance, Hardware, & Connectivity | Detailed Performance, Specs, & Functionality",
-        "Device Performance, Hardware, & Connectivity | Network Connectivity & Reception",
-        "Device Performance, Hardware, & Connectivity | Call & Bluetooth Audio Quality",
-        "Device Performance, Hardware, & Connectivity | Touchscreen Responsiveness",
-        "Device Performance, Hardware, & Connectivity | Data Transfer Speed",
-        "Device Performance, Hardware, & Connectivity | General Specifications & Usability",
-        "Device Performance, Hardware, & Connectivity | App Launch Speed"
-    ],
-    "Compared | Pricing, Value, & Trade-in Comparisons": [
+
+    # Compared
+    "Comparison | Value for Money & Deals": [
         "Compared | Pricing, Value, & Trade-in Comparisons",
         "Compared | Upgrade Significance & Value Comparisons"
     ],
-    "Compared | Battery & Charging Comparisons": [
-        "Compared | Battery & Charging Comparisons",
-        "Compared | Charging Port & Method Comparisons"
+
+
+    #   BUILD & DESIGN
+    "Build Quality & Design | Build Quality, Design, Durability & Ergonomics": [
+        "Build Quality, Design, & Ergonomics | Overall Build, Design, Durability, & Ergonomics",
+        "Build Quality, Design, & Ergonomics | Specific Components, Materials, & Physical Attributes",
+        "Build Quality, Design, & Ergonomics | Physical Buttons",
     ],
-    "Compared | Build Quality, Design, & Ergonomics Comparisons": [
+
+
+    # Compared
+    "Comparison | Build Quality, Design, Durability & Ergonomics": [
         "Compared | Build Quality, Design, & Ergonomics Comparisons",
         "Compared | Physical Button & Haptic Comparisons",
         "Compared | Lighting & Color Comparisons (Hardware)"
     ],
-    "Display & Screen | Detailed Display Attributes & General Performance": [
+
+    #   BATTERY & CHARGING
+    "Battery & Charging | Battery Life & Health": [
+        "Battery, Charging, & Power | Battery Life, Health, & Drain"
+    ],
+
+    "Battery & Charging | Battery Charging Speed": [
+        "Battery, Charging, & Power | Charging Speed & Performance"
+    ],
+
+    "Battery & Charging | Battery Capacity": [
+        "Battery, Charging, & Power | Detailed Battery & Power Attributes",
+        "Battery, Charging, & Power | Battery Capacity / Size (mAh)"
+    ],
+
+    # Compared
+    "Comparison | Battery & Charging Comparisons": [
+        "Compared | Battery & Charging Comparisons",
+    ],
+
+    #   DISPLAY
+    "Display | Display Quality": [
+        "Display & Screen | Overall Display Quality, Resolution, & Touchscreen",
+        "Display & Screen | Display Refresh Rate",
+        "Display & Screen | Display Durability & Longevity",
+    ],
+
+    "Display | Display Defects": [
+        "Display & Screen | Display Defects (Green/Red Line Issue)",
+        "Display & Screen | Display Flicker & PWM",
+    ],
+
+    "Display | Display Visual Performance": [
         "Display & Screen | Detailed Display Attributes & General Performance",
         "Display & Screen | Display Brightness",
-        "Display & Screen | Bezels",
-        "Display & Screen | Display Defects (Green/Red Line Issue)",
         "Display & Screen | Display Color Accuracy & Reproduction",
-        "Display & Screen | Display Durability & Longevity",
-        "Display & Screen | Curved Display / Screen Curvature",
         "Display & Screen | Screen Reflections & Anti-Glare",
-        "Display & Screen | Display Flicker & PWM",
+    ],
+
+    "Display | Display Aesthetics": [
+        "Display & Screen | Bezels",
+        "Display & Screen | Curved Display / Screen Curvature",
         "Display & Screen | Display Notch / Cutout"
     ],
-    "Compared | Camera System & Quality Comparisons": [
-        "Compared | Camera System & Quality Comparisons",
-        "Compared | Ultrawide Camera Comparisons"
+
+    "Comparison | Display Quality": [
+        "Compared | Display Quality Comparisons",
+        "Compared | Display Refresh Rate Comparisons",
+        "Compared | Touchscreen Responsiveness Comparisons"
     ],
-    "Camera Quality, Features, & Performance | Detailed Camera Features, Processing, & Specific Performance": [
+
+    "Comparison | Display Visual Performance": [
+        "Compared | Display Brightness Comparisons",
+        "Compared | Display Color Accuracy Comparisons",        
+        "Compared | Anti-Reflection & Glare Comparisons",
+    ],
+
+    "Comparison | Display Aesthetics": [
+        "Compared | Display Notch/Cutout Comparisons",
+        "Compared | Display Size, Resolution, & Design Comparisons"
+    ],
+
+    #   CAMERA
+    "Camera | Camera Quality": [
+        "Camera Quality, Features, & Performance | Overall Camera Quality, Zoom, & Low Light Performance"
+    ],
+
+    "Camera | Camera Features": [
         "Camera Quality, Features, & Performance | Detailed Camera Features, Processing, & Specific Performance",
         "Camera Quality, Features, & Performance | Ultrawide & Macro Camera",
         "Camera Quality, Features, & Performance | Image & Video Stabilization (OIS/EIS)",
         "Camera Quality, Features, & Performance | Autofocus"
     ],
-    "Compared | Processor, RAM, & Storage Spec Comparisons": [
+
+    # Compared
+    "Comparison | Camera Quality": [
+        "Compared | Camera System & Quality Comparisons",
+        "Compared | Ultrawide Camera Comparisons"
+    ],
+
+    #   PERFORMANCE & CONNECTIVITY
+    "Device Performance | Processor Performance": [
+        "Device Performance, Hardware, & Connectivity | Overall Performance, Processor, Gaming, & Thermals",
+        "Device Performance, Hardware, & Connectivity | App Launch Speed"
+    ],
+
+    "Device Performance | Thermals": [
+        "Device Performance, Hardware, & Connectivity | General Overheating",
+        "Device Performance, Hardware, & Connectivity | Heating During Charging",
+    ],
+
+
+    "Device Performance | Technical Performance & Storage Specs": [
+        "Device Performance, Hardware, & Connectivity | Touchscreen Responsiveness",
+        "Device Performance, Hardware, & Connectivity | Data Transfer Speed",
+        "Device Performance, Hardware, & Connectivity | General Specifications & Usability",
+        "Device Performance, Hardware, & Connectivity | Detailed Performance, Specs, & Functionality",
+        "Features & Functionality | RAM & Storage Capacity",
+    ],
+
+    # Compared
+    "Comparison | Technical Performance & Storage Specs": [
         "Compared | Processor, RAM, & Storage Spec Comparisons",
-        "Compared | Storage, RAM, & Expansion Comparisons (Hardware)",
+    ],
+
+    "Comparison | Processor Performance": [
         "Compared | Gaming Performance Comparisons",
         "Compared | Remote Play Performance Comparisons",
-        "Compared | Snapdragon Processor Comparisons"
+        "Compared | Snapdragon Processor Comparisons",
     ],
-    "Overall Product & Customer Experience | General Product Attributes & Market Perception": [
-        "Overall Product & Customer Experience | General Product Attributes & Market Perception",
-        "Overall Product & Customer Experience | Brand Perception & Overall Appeal",
-        "Overall Product & Customer Experience | Upgrades & Generational Improvements"
+
+    "Comparison | Thermals": [
+        "Compared | Thermal Performance & Cooling Comparisons"
     ],
-    "Build Quality, Design, & Ergonomics | Specific Components, Materials, & Physical Attributes": [
-        "Build Quality, Design, & Ergonomics | Specific Components, Materials, & Physical Attributes",
-        "Build Quality, Design, & Ergonomics | Physical Buttons"
-    ],
-    "Compared | General & Miscellaneous Comparisons": [
-        "Compared | General & Miscellaneous Comparisons",
-        "Compared | Overall Impression & Preference Comparisons",
-        "Compared | Software Update Process & Policy Comparisons",
-        "Compared | Stylus (S Pen) Comparisons",
-        "Compared | Audio & Speaker Quality Comparisons",
-        "Compared | General Feature Comparisons",
-        "Compared | Biometric Security Comparisons (Fingerprint/Face)",
-        "Compared | Ecosystem & Integration Comparisons",
-        "Compared | Software Update & Support Longevity Comparisons",
-        "Compared | Customer Service & Warranty Comparisons" ,
-        "Compared | Software Performance & Optimization Comparisons",
-        "Compared | SIM Card Support Comparisons",
-        "Compared | Keyboard Comparisons (Hardware & Software)",
-        "Compared | MagSafe Comparisons",
-        "Compared | Repair Cost & Warranty Comparisons",
-        "Compared | Wi-Fi Performance Comparisons",
-        "Compared | Health Sensor Comparisons",
-        "Compared | Navigation & Gesture Comparisons" 
-    ],
-    "Compared | Display Size, Resolution, & Design Comparisons": [
-        "Compared | Display Size, Resolution, & Design Comparisons",
-        "Compared | Display Notch/Cutout Comparisons"
-    ],
-    "Pricing, Value, & Cost | Detailed Pricing, Costs, & Purchase Factors": [
-        "Pricing, Value, & Cost | Detailed Pricing, Costs, & Purchase Factors",
-        "Pricing, Value, & Cost | Repair & Replacement Costs",
-        "Pricing, Value, & Cost | Price by Storage/RAM Variant"
-    ],
-    "Software, OS, & User Experience | Operating System & User Interface (General Experience)": [
+
+    #   SOFTWARE & USER EXPERIENCE
+    "Software & UX | User Experience": [
         "Software, OS, & User Experience | Operating System & User Interface (General Experience)",
         "Software, OS, & User Experience | Software & UI Smoothness"
     ],
-    "Overall Product & Customer Experience | Customer Support, Service, & Warranty": [
-        "Overall Product & Customer Experience | Customer Support, Service, & Warranty",
+
+    "Software & UX | Software Issues & Bugs": [
+            "Software, OS, & User Experience | Bloatware & Advertisements (Software)",
+            "Software, OS, & User Experience | Software Bugs & Glitches",
+    ],
+
+    "Software & UX | Software Experience, Features & System Settings": [
+        "Software, OS, & User Experience | Detailed Software Features, Apps, & System Behaviors",
+        "Software, OS, & User Experience | Multitasking & Window Management",
+        "Software, OS, & User Experience | System Navigation (Gestures & Buttons)",
+        "Software, OS, & User Experience | Keyboard (Software Experience)",
+        "Software, OS, & User Experience | App & Software Compatibility",
+        "Software, OS, & User Experience | Volume Control (Software)",
+        "Software, OS, & User Experience | Clipboard & Text Selection",
+        "Software, OS, & User Experience | Brightness Control (Software)",
+        "Software, OS, & User Experience | Display Refresh Rate & Resolution Settings",
+        "Software, OS, & User Experience | Battery Indicator (UI)",
+        "Software, OS, & User Experience | eSIM Management (Software)",
+        "Software, OS, & User Experience | Battery Optimization & Management (Software)",
+    ],
+
+        "Software & UX | Software Updates & Support Longevity": [
+        "Software, OS, & User Experience | Software Updates & Support Longevity",
+    ],
+    "Software & UX | Customization & UI": [
+        "Software, OS, & User Experience | Notifications, Widgets, & App Management",
+        "Software, OS, & User Experience | Software Customization & Flexibility (General)",
+        "Software, OS, & User Experience | Control Center Customization",
+        "Software, OS, & User Experience | Watch Faces & Customization",
+        "Software, OS, & User Experience | Home Screen Customization & Layout",
+    ],
+
+
+    "Comparison | Software Experience, Features & System Settings": [
+        "Compared | Software Update Process & Policy Comparisons",
+        "Compared | Software Update & Support Longevity Comparisons",
+        "Compared | Software Performance & Optimization Comparisons",
+        "Compared | Navigation & Gesture Comparisons",
+    ],
+
+    "Comparison | Customer Service & Warranty": [
+        "Compared | Repair Cost & Warranty Comparisons",
+        "Compared | Customer Service & Warranty Comparisons",
+    ],
+
+    #   FEATURES & HARDWARE
+    "Device Features & Functionality | General Features": [
+        "Features & Functionality | Detailed Device Features & Functionality",
+        "Features & Functionality | General Feature Assessment",
+        "Features & Functionality | Portability & Travel Use",
+        "Features & Functionality | Fingerprint Sensor (Hardware & Performance)",
+        "Features & Functionality | Biometric Authentication (General)",
+        "Features & Functionality | Device Modding & Bootloader",
+        "Software, OS, & User Experience | Bootloader & Device Unlocking",
+        "Features & Functionality | Bootloader & Device Unlocking",
+    ],
+
+    "Device Features & Functionality | Stylus & Input Accessories": [
+        "Features & Functionality | S Pen (General Support & Experience)",
+        "Features & Functionality | S Pen Bluetooth Features",
+        "Features & Functionality | Stylus Compatibility (Apple Pencil / Wacom)",
+        "Features & Functionality | Keyboard Accessories & Support",
+        "Features & Functionality | Physical Camera Button",
+    ],
+
+    "Device Features & Functionality | Essentials & Expansion": [
+        "Features & Functionality | Included Charger (In-Box)",
+        "Features & Functionality | SIM & Storage Expansion (SD/eSIM)",        
+        "Features & Functionality | Headphone Jack",
+        "Features & Functionality | USB-C / Charging Port & Video Out",
+        "Features & Functionality | MagSafe Compatibility & Charging",
+    ],
+
+    "Device Features & Functionality | Connectivity & Wireless Standards": [
+        "Features & Functionality | Network Bands & Carrier Support",
+        "Features & Functionality | NFC (Near Field Communication)",
+        "Features & Functionality | Wi-Fi Standards (Wi-Fi 6/6E/7)",
+        "Features & Functionality | Ultra Wideband (UWB)",
+        "Features & Functionality | Satellite Connectivity & SOS",
+        "Device Performance, Hardware, & Connectivity | Network Connectivity & Reception",
+    ],
+
+    "Device Features & Functionality | AI Assistants & Smart Features": [
+        "Features & Functionality | AI Assistants (Siri / Apple Intelligence)",
+        "Software, OS, & User Experience | AI Assistants (Siri / Apple Intelligence)",
+        "Features & Functionality | Device Modes (Dex, Gaming, Power Saver)",
+        "Features & Functionality | Health Sensors & Monitoring"
+    ],
+
+    "Device Features & Functionality | Audio & Speakers": [
+        "Features & Functionality | Audio & Speaker Quality",
+        "Device Performance, Hardware, & Connectivity | Call & Bluetooth Audio Quality",
+    ],
+
+    # Compared
+    "Comparison | General Features": [
+        "Compared | General & Miscellaneous Comparisons",
+        "Compared | Overall Impression & Preference Comparisons",
+        "Compared | General Feature Comparisons",
+        "Compared | Biometric Security Comparisons (Fingerprint/Face)",
+        "Compared | Ecosystem & Integration Comparisons",
+    ],
+
+    "Comparison | Essentials & Expansion": [
+        "Compared | SIM Card Support Comparisons",
+        "Compared | MagSafe Comparisons",
+        "Compared | Storage, RAM, & Expansion Comparisons (Hardware)",
+        "Compared | Charging Port & Method Comparisons",
+    ],
+
+    "Comparison | Audio & Speakers": [
+        "Compared | Audio & Speaker Quality Comparisons",
+    ],
+
+    "Comparison | Connectivity & Wireless Standards": [
+        "Compared | Wi-Fi Performance Comparisons",
+    ],
+    
+    "Comparison | Stylus & Input Accessories": [
+        "Compared | Stylus (S Pen) Comparisons",
+        "Compared | Keyboard Comparisons (Hardware & Software)",
+
+    ],
+
+    "Comparison | AI Assistants & Smart Features": [
+        "Compared | Health Sensor Comparisons",
+    ],
+
+    #   OVERALL EXPERIENCE
+    "Customer Experience | Product Perception": [
+        "Overall Product & Customer Experience | General Product Attributes & Market Perception",
+        "Overall Product & Customer Experience | Brand Perception & Overall Appeal",
+        "Overall Product & Customer Experience | Upgrades & Generational Improvements",
         "Overall Product & Customer Experience | Purchase, Pre-order, & Delivery Process",
     ],
-    "Compared | Display Quality Comparisons": [
-        "Compared | Display Quality Comparisons",
-        "Compared | Display Brightness Comparisons",
-        "Compared | Display Color Accuracy Comparisons",
-        "Compared | Anti-Reflection & Glare Comparisons",
-        "Compared | Touchscreen Responsiveness Comparisons"
-    ],
-    "Features & Functionality | Fingerprint Sensor (Hardware & Performance)": [
-        "Features & Functionality | Fingerprint Sensor (Hardware & Performance)",
-        "Features & Functionality | Biometric Authentication (General)"
+
+    "Customer Experience | Customer Service & Warranty": [
+        "Overall Product & Customer Experience | Customer Support, Service, & Warranty",
     ]
 }
 
@@ -217,7 +303,7 @@ from pathlib import Path
 # Paths
 # ===============================
 DATA_PATH = Path(r"E:\Product Comparator\final_aspa_data_clustered_with_sentiments.json")
-OUTPUT_PATH = Path(r"E:\Product Comparator\final_aspa_data_merged_with_sentiments.json")
+OUTPUT_PATH = Path(r"E:\Product Comparator\final_aspa_data_merged_with_sentiments1.json")
 
 # ===============================
 # Label Merge Mapping (Dict)
@@ -279,7 +365,7 @@ label_counts = Counter(merged_labels_flat)
 print(f"🔹 Total reviews processed: {len(merged_data)}")
 print(f"🔹 Unique labels after merging: {len(label_counts)}\n")
 
-for label, count in label_counts.most_common(10):
+for label, count in label_counts.most_common():
     print(f"{label:80s} → {count}")
 
 # ===============================
