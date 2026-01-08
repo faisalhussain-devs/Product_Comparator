@@ -1,7 +1,6 @@
 import json
 from pathlib import Path
 
-
 def run_gemini_pipeline() :
     """Reads product data and compiles all reviews/comments into a single dictionary."""
     text = {}

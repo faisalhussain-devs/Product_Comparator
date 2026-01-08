@@ -35,64 +35,7 @@ def clean_value(value: str) -> str:
     return value
 
 
-def process_transcript(sentences, target_words=30):
-    """
-    Combine consecutive sentences to get chunks with total words closest to target_words.
-    
-    Args:
-        sentences (list of str): List of sentences.
-        target_words (int): Desired number of words per chunk.
-        
-    Returns:
-        List of combined sentence chunks.
-    """
-    chunks = []
-    current_chunk = []
-    current_count = 0
-
-    for sentence in sentences:
-        word_count = len(sentence.split())
-        if word_count == 0:
-            continue
-
-        if not current_chunk:
-            current_chunk.append(sentence)
-            current_count += word_count
-        else:
-            dist_without = abs(target_words - current_count)
-            dist_with = abs(target_words - (current_count + word_count))
-            
-            if dist_with <= dist_without:
-                current_chunk.append(sentence)
-                current_count += word_count
-            else:
-                chunks.append(" ".join(current_chunk))
-                current_chunk = [sentence]
-                current_count = word_count
-
-    if current_chunk:
-        chunks.append(" ".join(current_chunk))
-
-    return chunks
-
-
-
-def preprocess_sentences(text, target_words=30):
-    """
-    Preprocess text into sentence chunks close to target_words.
-    
-    Steps:
-        1. Split text by full stops.
-        2. Split long sentences into smaller chunks (~target_words).
-        3. Merge very short sentences (~target_words) for model-friendly input.
-    
-    Args:
-        text (str): Raw text.
-        target_words (int): Desired word count per chunk.
-        
-    Returns:
-        List of processed sentence chunks.
-    """
+def preprocess_sentences(text):
     processed_chunks = []
     for sentence in text:  
         cleaned_chunk = []
@@ -102,7 +45,7 @@ def preprocess_sentences(text, target_words=30):
             cleaned = re.sub(r'^[^a-zA-Z0-9]+', '', raw_sentence)
             cleaned = re.sub(r'\s+', ' ', cleaned).strip()
             cleaned_chunk.append(cleaned)
-        processed_chunks.extend(process_transcript(cleaned_chunk, target_words=target_words))
+        processed_chunks.extend(cleaned_chunk)
     return processed_chunks
 
 

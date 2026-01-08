@@ -47,11 +47,11 @@ def parse_and_summarize_batch_results(results_filepath: Path, output_json_path: 
                 original_review_data = json.loads(original_review_json_str)
                 review_id = original_review_data.get("id")
                 review_text = original_review_data.get("review_text")
-                if usefulness_score >= 8:
+                if usefulness_score >= 1:
                     c += 1
                     all_results.append({
                         "id": review_id,
-                        "review_text": review_text,
+                        "text": review_text,
                         "usefullness_score":usefulness_score
                     })
 
@@ -67,7 +67,7 @@ def parse_and_summarize_batch_results(results_filepath: Path, output_json_path: 
 
 if __name__ == "__main__":
     results_file = Path(r"E:\Product Comparator\data\output_reviews_score_prediction-model-2025-10-12T00_16_45.439014Z_predictions.jsonl")
-    output_json_file = Path(r"E:\Product Comparator\data\final_labelled_reviews.json")
+    output_json_file = Path(r"E:\Product Comparator\data\final_labelled_reviews_temp.json")
 
     if results_file.exists():
         parse_and_summarize_batch_results(results_file, output_json_file)
