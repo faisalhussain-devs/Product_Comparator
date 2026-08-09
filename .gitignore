@@ -1,0 +1,35 @@
+__pycache__/
+*.py[cod]
+*.pyo
+
+venv/
+.env/
+
+.vscode/
+
+*.log
+
+.DS_Store
+Thumbs.db
+# Python environments
+venv/
+.env/
+
+# Model artifacts
+*.onnx
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.safetensors
+
+# Arrays / embeddings
+*.npy
+
+# Generated outputs
+*.jsonl
+
+# Experiment junk
+useless*/
+sample_reveiws_model/
+label_embeddings/
