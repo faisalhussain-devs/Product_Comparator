@@ -14,7 +14,7 @@ from .config import (
     TOP_TO_SUB_PATH,
     RANK_BATCH_SIZE,
     TOP_REVIEWS_COUNT,
-    SUB_ASPECT_REVIEWS_COUNT
+    SUB_ASPECT_REVIEWS_COUNT,
 )
 from .models import load_ranker, load_absa
 from .ranking import run_rank_batches
