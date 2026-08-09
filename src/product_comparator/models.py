@@ -1,25 +1,20 @@
 from dataclasses import dataclass
-from pathlib import Path
-
 import onnxruntime as ort
 from huggingface_hub import hf_hub_download
 from transformers import AutoTokenizer
 
-
-HF_REPO_ID = "Faisal191/aspect-classifier"
-
-RANKER_TOKENIZER_SUBFOLDER = "RankingReviews"
-RANKER_MODEL_FILE = "RankingReviews/model.onnx"
-
-ABSA_TOKENIZER_SUBFOLDER = "Domain_trained_encoder"
-ABSA_MODEL_FILE = "HABSA/Habsa_v6_fp32.onnx"
-
+from .config import (
+    HF_REPO_ID,
+    RANKER_TOKENIZER_SUBFOLDER,
+    RANKER_MODEL_FILE,
+    ABSA_TOKENIZER_SUBFOLDER,
+    ABSA_MODEL_FILE,    
+)
 
 @dataclass
 class ONNXModel:
     tokenizer: object
     session: ort.InferenceSession
-
 
 def get_execution_providers() -> list:
     available = ort.get_available_providers()
@@ -53,7 +48,6 @@ def create_session(model_path: str) -> ort.InferenceSession:
         providers=get_execution_providers(),
     )
 
-
 def load_model(
     tokenizer_subfolder: str,
     model_file: str,
@@ -76,13 +70,11 @@ def load_model(
         session=session,
     )
 
-
 def load_ranker() -> ONNXModel:
     return load_model(
         tokenizer_subfolder=RANKER_TOKENIZER_SUBFOLDER,
         model_file=RANKER_MODEL_FILE,
     )
-
 
 def load_absa() -> ONNXModel:
     return load_model(

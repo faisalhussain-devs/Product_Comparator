@@ -13,10 +13,12 @@ from .config import (
     TOP_TO_SPECS,
     TOP_TO_SUB_PATH,
     RANK_BATCH_SIZE,
+    TOP_REVIEWS_COUNT,
+    SUB_ASPECT_REVIEWS_COUNT
 )
 from .models import load_ranker, load_absa
 from .ranking import run_rank_batches
-from .aspect_analysis import run_absa_batches, predict_aspects
+from .habsa import run_absa_batches, predict_aspects
 from .confidence import calc_confidence
 
 
@@ -105,13 +107,25 @@ class ProductComparator:
             pred_sub,
         )
 
+        top_review_indices = np.argsort(rank_scores)[::-1][:TOP_REVIEWS_COUNT]
+
+        top_reviews = [
+            {
+                "text": reviews[i]["text"],
+                "usefulness": float(rank_scores[i]),
+            }
+            for i in top_review_indices
+        ]
+
         product_summary = []
+
         for top_index, top_name in TOP_LABELS.items():
             aspect_specs = {
                 spec_name: specifications[spec_name]
                 for spec_name in TOP_TO_SPECS[top_index]
                 if spec_name in specifications
             }
+
             product_summary.append({
                 "top_aspect_name": top_name,
                 "sub_aspects": [],
@@ -126,27 +140,36 @@ class ProductComparator:
                 (pred_sub[:, sub_index] == 1.0)
                 & (usefulness > REVIEW_USEFULNESS_THRESHOLD)
             )
-            review_indices = np.where(active_reviews)[0]
 
-            sub_aspect_reviews = [
-                selected_reviews[i]["text"]
-                for i in review_indices
+            review_indices = np.where(active_reviews)[0]
+            review_indices = review_indices[
+                np.argsort(usefulness[review_indices])[::-1]
+            ]
+
+            supporting_reviews = [
+                {
+                    "text": selected_reviews[i]["text"],
+                    "usefulness": float(usefulness[i]),
+                }
+                for i in review_indices[:SUB_ASPECT_REVIEWS_COUNT]
             ]
 
             active_top_indices = np.where(
                 self.top_to_sub_dense[:, sub_index] == 1
             )[0]
+
             if len(active_top_indices) == 0:
                 continue
 
             active_top = active_top_indices[0]
+
             product_summary[active_top]["sub_aspects"].append({
                 "sub_aspect_name": SUB_LABELS[sub_index],
                 "sub_aspect_sentiment": (
                     "positive" if sentiments[sub_index] > 0 else "negative"
                 ),
-                "sub_aspect_confidence": int(sub_confidence + 1.0),
-                "sub_aspect_top_reviews": sub_aspect_reviews,
+                "sub_aspect_confidence": round(float(sub_confidence)),
+                "supporting_reviews": supporting_reviews,
             })
 
         return {
@@ -154,5 +177,6 @@ class ProductComparator:
                 "product_name": product_name,
                 "product_type": product_type,
             },
+            "top_reviews": top_reviews,
             "product_summary": product_summary,
         }

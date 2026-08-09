@@ -25,11 +25,3 @@ def run_rank_batches(
         scores.append(outputs[0][:, 0])
 
     return np.concatenate(scores, axis=0)
-
-
-def select_reviews(
-    ranking_scores: np.ndarray,
-    threshold: float,
-) -> np.ndarray:
-    """Select reviews whose ranking score exceeds the threshold."""
-    return ranking_scores > threshold
