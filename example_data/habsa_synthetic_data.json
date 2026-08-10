@@ -1,0 +1,849 @@
+[
+    {
+        "id": 1,
+        "text": "The iPhone 16 Pro Max easily lasts me a full day with 6 to 7 hours of screen-on time. Even with 5G and the 120Hz display enabled, I usually have around 20% left at night.",
+        "expected": {
+            "top_aspects": [
+                "battery & charging"
+            ],
+            "sub_aspects": [
+                "battery life & health"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 2,
+        "text": "Battery life is disappointing. On heavy days with gaming and camera use, I have to plug the phone in before dinner.",
+        "expected": {
+            "top_aspects": [
+                "battery & charging"
+            ],
+            "sub_aspects": [
+                "battery life & health"
+            ],
+            "sentiment": "negative"
+        }
+    },
+    {
+        "id": 3,
+        "text": "Charging from 10% to 50% takes roughly 25 minutes with my 30W charger. It is not the fastest phone I have used, but the charging speed is perfectly usable.",
+        "expected": {
+            "top_aspects": [
+                "battery & charging"
+            ],
+            "sub_aspects": [
+                "battery charging speed"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 4,
+        "text": "The battery capacity is large enough for my usage, but I expected more endurance from such a big phone.",
+        "expected": {
+            "top_aspects": [
+                "battery & charging"
+            ],
+            "sub_aspects": [
+                "battery capacity",
+                "battery life & health"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 5,
+        "text": "After several months of daily charging, battery health still looks good and I have not noticed any meaningful degradation.",
+        "expected": {
+            "top_aspects": [
+                "battery & charging"
+            ],
+            "sub_aspects": [
+                "battery life & health"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 6,
+        "text": "The phone gets warm during a long gaming session, but outside gaming it stays comfortably cool.",
+        "expected": {
+            "top_aspects": [
+                "device performance"
+            ],
+            "sub_aspects": [
+                "thermals"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 7,
+        "text": "Genshin Impact runs smoothly at high settings and I have not seen major frame drops during normal gameplay.",
+        "expected": {
+            "top_aspects": [
+                "device performance"
+            ],
+            "sub_aspects": [
+                "processor performance",
+                "technical performance & storage specs"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 8,
+        "text": "The A18 Pro feels extremely fast. Apps open immediately and switching between several heavy applications is basically instantaneous.",
+        "expected": {
+            "top_aspects": [
+                "device performance"
+            ],
+            "sub_aspects": [
+                "processor performance"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 9,
+        "text": "I bought the 256GB model and storage is already becoming a problem because I take a lot of 4K video.",
+        "expected": {
+            "top_aspects": [
+                "device performance"
+            ],
+            "sub_aspects": [
+                "technical performance & storage specs"
+            ],
+            "sentiment": "negative"
+        }
+    },
+    {
+        "id": 10,
+        "text": "The phone is ridiculously fast, although it becomes noticeably warm after about half an hour of intensive gaming.",
+        "expected": {
+            "top_aspects": [
+                "device performance"
+            ],
+            "sub_aspects": [
+                "processor performance",
+                "thermals"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 11,
+        "text": "The display is fantastic outdoors. Even under direct sunlight I can read messages without struggling.",
+        "expected": {
+            "top_aspects": [
+                "display"
+            ],
+            "sub_aspects": [
+                "display quality",
+                "display visual performance"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 12,
+        "text": "The 120Hz refresh rate makes scrolling feel extremely smooth compared with my old 60Hz phone.",
+        "expected": {
+            "top_aspects": [
+                "display"
+            ],
+            "sub_aspects": [
+                "display visual performance"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 13,
+        "text": "The screen looks beautiful and colors are vibrant without looking completely artificial.",
+        "expected": {
+            "top_aspects": [
+                "display"
+            ],
+            "sub_aspects": [
+                "display aesthetics",
+                "display quality"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 14,
+        "text": "I noticed a tiny bright spot near the edge of the display. It is barely visible, but once I noticed it I could not stop seeing it.",
+        "expected": {
+            "top_aspects": [
+                "display"
+            ],
+            "sub_aspects": [
+                "display defects"
+            ],
+            "sentiment": "negative"
+        }
+    },
+    {
+        "id": 15,
+        "text": "The screen is sharp, bright, smooth, and honestly one of the best displays I have used.",
+        "expected": {
+            "top_aspects": [
+                "display"
+            ],
+            "sub_aspects": [
+                "display quality",
+                "display visual performance"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 16,
+        "text": "The titanium frame feels premium and the phone survived several months of daily use without any dents.",
+        "expected": {
+            "top_aspects": [
+                "build quality & design"
+            ],
+            "sub_aspects": [
+                "build quality, design, durability & ergonomics"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 17,
+        "text": "It is too heavy for comfortable one-handed use. After reading for twenty minutes my hand starts getting tired.",
+        "expected": {
+            "top_aspects": [
+                "build quality & design"
+            ],
+            "sub_aspects": [
+                "build quality, design, durability & ergonomics"
+            ],
+            "sentiment": "negative"
+        }
+    },
+    {
+        "id": 18,
+        "text": "The phone looks gorgeous, although the glass back picked up a few scratches despite using a case.",
+        "expected": {
+            "top_aspects": [
+                "build quality & design"
+            ],
+            "sub_aspects": [
+                "build quality, design, durability & ergonomics"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 19,
+        "text": "I actually like the extra weight because it makes the phone feel solid and expensive.",
+        "expected": {
+            "top_aspects": [
+                "build quality & design"
+            ],
+            "sub_aspects": [
+                "build quality, design, durability & ergonomics"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 20,
+        "text": "The camera is excellent in daylight and produces very detailed photos with natural colors.",
+        "expected": {
+            "top_aspects": [
+                "camera"
+            ],
+            "sub_aspects": [
+                "camera quality"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 21,
+        "text": "Low-light photos are decent, but I lose some fine detail when I crop the image heavily.",
+        "expected": {
+            "top_aspects": [
+                "camera"
+            ],
+            "sub_aspects": [
+                "camera quality"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 22,
+        "text": "The 5x telephoto camera is incredibly useful for distant subjects and gives me much better framing than digital zoom.",
+        "expected": {
+            "top_aspects": [
+                "camera"
+            ],
+            "sub_aspects": [
+                "camera features",
+                "camera quality"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 23,
+        "text": "Video stabilization is excellent when walking, and 4K recording looks very clean.",
+        "expected": {
+            "top_aspects": [
+                "camera"
+            ],
+            "sub_aspects": [
+                "camera features",
+                "camera quality"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 24,
+        "text": "The camera sometimes produces blurry photos when my subject is moving quickly.",
+        "expected": {
+            "top_aspects": [
+                "camera"
+            ],
+            "sub_aspects": [
+                "camera quality"
+            ],
+            "sentiment": "negative"
+        }
+    },
+    {
+        "id": 25,
+        "text": "Face ID works reliably in darkness and usually unlocks before I even realize the phone has seen my face.",
+        "expected": {
+            "top_aspects": [
+                "device features & functionality"
+            ],
+            "sub_aspects": [
+                "general features"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 26,
+        "text": "The speakers are loud and clear for podcasts, although bass becomes weaker at maximum volume.",
+        "expected": {
+            "top_aspects": [
+                "device features & functionality"
+            ],
+            "sub_aspects": [
+                "audio & speakers"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 27,
+        "text": "There is no microSD slot, which is annoying because I would have liked an easy way to expand storage.",
+        "expected": {
+            "top_aspects": [
+                "device features & functionality"
+            ],
+            "sub_aspects": [
+                "essentials & expansion"
+            ],
+            "sentiment": "negative"
+        }
+    },
+    {
+        "id": 28,
+        "text": "I like the hardware features overall, especially Face ID and the speakers. Nothing feels particularly missing apart from a headphone jack.",
+        "expected": {
+            "top_aspects": [
+                "device features & functionality"
+            ],
+            "sub_aspects": [
+                "general features",
+                "audio & speakers"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 29,
+        "text": "Wi-Fi performance is stable and Bluetooth headphones reconnect almost instantly after leaving the house.",
+        "expected": {
+            "top_aspects": [
+                "device features & functionality"
+            ],
+            "sub_aspects": [
+                "connectivity & wireless standards"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 30,
+        "text": "The interface feels polished and most settings are easy to find once you know where Apple put them.",
+        "expected": {
+            "top_aspects": [
+                "software & ux"
+            ],
+            "sub_aspects": [
+                "software experience, features & system settings"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 31,
+        "text": "I love how customizable the lock screen and Control Center are now. It feels much less restrictive than older versions of iOS.",
+        "expected": {
+            "top_aspects": [
+                "software & ux"
+            ],
+            "sub_aspects": [
+                "customization & ui"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 32,
+        "text": "The latest software update changed a few things I liked, and some settings are now harder to find.",
+        "expected": {
+            "top_aspects": [
+                "software & ux"
+            ],
+            "sub_aspects": [
+                "software updates & support longevity",
+                "software experience, features & system settings"
+            ],
+            "sentiment": "negative"
+        }
+    },
+    {
+        "id": 33,
+        "text": "The phone occasionally freezes for a second when opening the camera from the lock screen.",
+        "expected": {
+            "top_aspects": [
+                "software & ux"
+            ],
+            "sub_aspects": [
+                "software issues & bugs"
+            ],
+            "sentiment": "negative"
+        }
+    },
+    {
+        "id": 34,
+        "text": "Apple's long software support is one of the main reasons I bought this phone. I expect to keep getting major updates for years.",
+        "expected": {
+            "top_aspects": [
+                "software & ux"
+            ],
+            "sub_aspects": [
+                "software updates & support longevity"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 35,
+        "text": "The UI is smooth but there are still a few weird animations here and there. Nothing serious.",
+        "expected": {
+            "top_aspects": [
+                "software & ux"
+            ],
+            "sub_aspects": [
+                "user experience",
+                "software issues & bugs"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 36,
+        "text": "Siri is more useful than before, but I still do not use AI assistants very often.",
+        "expected": {
+            "top_aspects": [
+                "software & ux"
+            ],
+            "sub_aspects": [
+                "ai assistants & smart features"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 37,
+        "text": "The phone feels great overall, but I wish Apple had made it lighter. Battery life and camera quality are both excellent.",
+        "expected": {
+            "top_aspects": [
+                "build quality & design",
+                "battery & charging",
+                "camera"
+            ],
+            "sub_aspects": [
+                "build quality, design, durability & ergonomics",
+                "battery life & health",
+                "camera quality"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 38,
+        "text": "Battery life is excellent and the display is gorgeous, but charging speed is only average.",
+        "expected": {
+            "top_aspects": [
+                "battery & charging",
+                "display"
+            ],
+            "sub_aspects": [
+                "battery life & health",
+                "battery charging speed",
+                "display aesthetics"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 39,
+        "text": "The phone stays fast during gaming and the display remains smooth, although it gets warm after a long session.",
+        "expected": {
+            "top_aspects": [
+                "device performance",
+                "display"
+            ],
+            "sub_aspects": [
+                "processor performance",
+                "thermals",
+                "display visual performance"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 40,
+        "text": "Photos look great, video stabilization is excellent, and the screen makes reviewing photos outside very easy.",
+        "expected": {
+            "top_aspects": [
+                "camera",
+                "display"
+            ],
+            "sub_aspects": [
+                "camera quality",
+                "camera features",
+                "display visual performance"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 41,
+        "text": "The speakers are fantastic for movies, but the phone is so heavy that I rarely want to hold it for a long movie.",
+        "expected": {
+            "top_aspects": [
+                "device features & functionality",
+                "build quality & design"
+            ],
+            "sub_aspects": [
+                "audio & speakers",
+                "build quality, design, durability & ergonomics"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 42,
+        "text": "I bought this mainly for the camera. Daylight shots are excellent, but moving subjects can still come out blurry.",
+        "expected": {
+            "top_aspects": [
+                "camera"
+            ],
+            "sub_aspects": [
+                "camera quality"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 43,
+        "text": "Honestly, the phone is great. Battery good, screen good, camera good. No complaints really.",
+        "expected": {
+            "top_aspects": [
+                "battery & charging",
+                "display",
+                "camera"
+            ],
+            "sub_aspects": [
+                "battery life & health",
+                "display quality",
+                "camera quality"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 44,
+        "text": "After using it for months I still like the phone, although the weight and occasional software glitches are annoying.",
+        "expected": {
+            "top_aspects": [
+                "build quality & design",
+                "software & ux"
+            ],
+            "sub_aspects": [
+                "build quality, design, durability & ergonomics",
+                "software issues & bugs"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 45,
+        "text": "It charges okay, lasts okay, takes good pictures, runs fast. Basically everything is fine but nothing completely blew me away.",
+        "expected": {
+            "top_aspects": [
+                "battery & charging",
+                "camera",
+                "device performance"
+            ],
+            "sub_aspects": [
+                "battery charging speed",
+                "battery life & health",
+                "camera quality",
+                "processor performance"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 46,
+        "text": "The camera app sometimes freezes, but once it opens the actual photos look excellent.",
+        "expected": {
+            "top_aspects": [
+                "camera",
+                "software & ux"
+            ],
+            "sub_aspects": [
+                "camera quality",
+                "software issues & bugs"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 47,
+        "text": "I do not care about benchmarks. In actual use the phone is extremely responsive and multitasking is effortless.",
+        "expected": {
+            "top_aspects": [
+                "device performance"
+            ],
+            "sub_aspects": [
+                "processor performance"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 48,
+        "text": "The display has a tiny scratch after a few weeks, even though I was careful with it. Everything else about the screen looks great.",
+        "expected": {
+            "top_aspects": [
+                "display"
+            ],
+            "sub_aspects": [
+                "display defects",
+                "display quality"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 49,
+        "text": "I barely notice the weight when using it normally, but gaming while holding it for an hour definitely gets uncomfortable.",
+        "expected": {
+            "top_aspects": [
+                "build quality & design"
+            ],
+            "sub_aspects": [
+                "build quality, design, durability & ergonomics"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 50,
+        "text": "The battery percentage drops quickly during gaming, but normal browsing and messaging easily get me through the day.",
+        "expected": {
+            "top_aspects": [
+                "battery & charging",
+                "device performance"
+            ],
+            "sub_aspects": [
+                "battery life & health",
+                "thermals"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 51,
+        "text": "The 5x zoom is probably my favorite camera feature. I use it constantly when taking photos of things far away.",
+        "expected": {
+            "top_aspects": [
+                "camera"
+            ],
+            "sub_aspects": [
+                "camera features"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 52,
+        "text": "I really dislike how much storage space the system takes, especially on the 256GB version.",
+        "expected": {
+            "top_aspects": [
+                "device performance"
+            ],
+            "sub_aspects": [
+                "technical performance & storage specs"
+            ],
+            "sentiment": "negative"
+        }
+    },
+    {
+        "id": 53,
+        "text": "The software is polished, the animations are smooth, and I have not experienced any crashes so far.",
+        "expected": {
+            "top_aspects": [
+                "software & ux"
+            ],
+            "sub_aspects": [
+                "user experience",
+                "software experience, features & system settings"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 54,
+        "text": "The phone is expensive, but after using it every day I think the overall experience is worth the money.",
+        "expected": {
+            "top_aspects": [
+                "price & value"
+            ],
+            "sub_aspects": [
+                "value for money & deals"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 55,
+        "text": "I like the phone, but at this price I expected faster charging and a lighter body.",
+        "expected": {
+            "top_aspects": [
+                "price & value",
+                "battery & charging",
+                "build quality & design"
+            ],
+            "sub_aspects": [
+                "value for money & deals",
+                "battery charging speed",
+                "build quality, design, durability & ergonomics"
+            ],
+            "sentiment": "negative"
+        }
+    },
+    {
+        "id": 56,
+        "text": "The phone is good. Very good actually. The camera is nice and the screen is bright. That's basically it.",
+        "expected": {
+            "top_aspects": [
+                "camera",
+                "display"
+            ],
+            "sub_aspects": [
+                "camera quality",
+                "display quality"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 57,
+        "text": "Battery? Yeah, it lasts. Camera? Great. Performance? Fast. I don't really have anything else to say.",
+        "expected": {
+            "top_aspects": [
+                "battery & charging",
+                "camera",
+                "device performance"
+            ],
+            "sub_aspects": [
+                "battery life & health",
+                "camera quality",
+                "processor performance"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 58,
+        "text": "After six months the frame still looks new, the battery is holding up well, and the camera remains excellent. Easily the best phone I have owned.",
+        "expected": {
+            "top_aspects": [
+                "build quality & design",
+                "battery & charging",
+                "camera"
+            ],
+            "sub_aspects": [
+                "build quality, design, durability & ergonomics",
+                "battery life & health",
+                "camera quality"
+            ],
+            "sentiment": "positive"
+        }
+    },
+    {
+        "id": 59,
+        "text": "Everything works, mostly. The screen is great and the camera is great, but sometimes the camera app hangs for a second before taking the picture.",
+        "expected": {
+            "top_aspects": [
+                "display",
+                "camera",
+                "software & ux"
+            ],
+            "sub_aspects": [
+                "display quality",
+                "camera quality",
+                "software issues & bugs"
+            ],
+            "sentiment": "mixed"
+        }
+    },
+    {
+        "id": 60,
+        "text": "I don't know, maybe I expected too much. The phone is fast, the camera is good, the screen is excellent, and battery life is decent. Nothing is terrible, nothing is perfect.",
+        "expected": {
+            "top_aspects": [
+                "device performance",
+                "camera",
+                "display",
+                "battery & charging"
+            ],
+            "sub_aspects": [
+                "processor performance",
+                "camera quality",
+                "display quality",
+                "battery life & health"
+            ],
+            "sentiment": "mixed"
+        }
+    }
+]

@@ -45,6 +45,7 @@ def preprocess_reddit_reviews(input_file):
 
     for product in data:
         texts = []
+        product_id = product.get("product").get("$oid")
         reviews = product.get("review_texts", [])
         comments = product.get("comments", [])
 
@@ -68,7 +69,10 @@ def preprocess_reddit_reviews(input_file):
                     texts.append({"text": text})
 
         if texts:
-            products.append(texts)
+            products.append({
+                "id": product_id,
+                "text": texts
+            })
 
     return products
 
@@ -119,19 +123,20 @@ def flatten_data(product, sep="_"):
 
 def preprocess_products(input_file, drop_columns=None):
     specs = {}
-    product_name = []
     flat_data = []
 
     with open(input_file, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     for product in data:
-        product_name.append(product["name"])
+        product_id = product.get("_id").get("$oid")
         specs["specifications"] = flatten_data(product)
 
         if drop_columns is not None:
-            flat_data.append(
-                drop_specification_keys(specs, drop_keys=drop_columns)
-            )
+            flat_data.append({
+                "id": product_id,
+                "specifications": drop_specification_keys(specs, drop_keys=drop_columns)["specifications"],
+                "name": product["name"]
+            })
 
-    return flat_data, product_name
+    return flat_data

@@ -36,7 +36,7 @@ class ProductComparator:
         product_type: str = "Latest Smartphones",
     ) -> dict:
         review_texts = [
-            review["text"]
+            f"Main product: {product_name}. Review: {review['text']}"
             for review in reviews
             if isinstance(review, dict) and isinstance(review.get("text"), str)
         ]
@@ -57,7 +57,7 @@ class ProductComparator:
             batch_size=RANK_BATCH_SIZE,
         )
 
-        if np.sum(rank_scores > 7) <= 50:
+        if np.sum(rank_scores > 7) <= 10:
             return {
                 "product_info": {
                     "product_name": product_name,
@@ -67,7 +67,7 @@ class ProductComparator:
                 "status": "insufficient_review_evidence",
             }
 
-        absa_mask = rank_scores > 5
+        absa_mask = rank_scores > 7.0
         selected_reviews = [reviews[i] for i in np.where(absa_mask)[0]]
         selected_texts = [
             f"Main product: {product_name}. Review: {review['text']}"
