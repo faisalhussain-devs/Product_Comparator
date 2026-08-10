@@ -20,6 +20,7 @@ from .models import load_ranker, load_absa
 from .ranking import run_rank_batches
 from .habsa import run_absa_batches, predict_aspects
 from .confidence import calc_confidence
+from .relevance import product_relevance
 
 
 class ProductComparator:
@@ -35,11 +36,13 @@ class ProductComparator:
         specifications: dict,
         product_type: str = "Latest Smartphones",
     ) -> dict:
-        review_texts = [
-            f"Main product: {product_name}. Review: {review['text']}"
-            for review in reviews
-            if isinstance(review, dict) and isinstance(review.get("text"), str)
-        ]
+
+        valid_reviews = [review for review in reviews if isinstance(review, dict)and isinstance(review.get("text"), str) and review["text"].strip()]
+        if not valid_reviews:
+            raise ValueError("Product contains no valid reviews.")
+        
+        relevance_scores = np.asarray([product_relevance(review["text"], product_name) for review in valid_reviews])
+        review_texts = [f"Main product: {product_name}. Review: {review['text']}" for review in valid_reviews]
 
         if not review_texts:
             raise ValueError("Product contains no valid reviews.")
@@ -57,7 +60,11 @@ class ProductComparator:
             batch_size=RANK_BATCH_SIZE,
         )
 
-        if np.sum(rank_scores > 7) <= 10:
+        relevant_mask = relevance_scores > 0.4
+        useful_mask = rank_scores > 7.0
+        evidence_mask = relevant_mask & useful_mask
+
+        if np.sum(evidence_mask) <= 10:
             return {
                 "product_info": {
                     "product_name": product_name,
@@ -67,12 +74,8 @@ class ProductComparator:
                 "status": "insufficient_review_evidence",
             }
 
-        absa_mask = rank_scores > 7.0
-        selected_reviews = [reviews[i] for i in np.where(absa_mask)[0]]
-        selected_texts = [
-            f"Main product: {product_name}. Review: {review['text']}"
-            for review in selected_reviews
-        ]
+        selected_reviews = [reviews[i] for i in np.where(evidence_mask)[0]]
+        selected_texts = [f"Main product: {product_name}. Review: {review['text']}" for review in selected_reviews]
 
         absa_inputs = self.absa.tokenizer(
             selected_texts,
@@ -99,7 +102,7 @@ class ProductComparator:
             comparison_threshold=COMPARISON_THRESHOLD,
         )
 
-        usefulness = rank_scores[absa_mask]
+        usefulness = rank_scores[evidence_mask]
         sentiments, confidence = calc_confidence(
             sent_conf,
             usefulness,
@@ -107,14 +110,15 @@ class ProductComparator:
             pred_sub,
         )
 
-        top_review_indices = np.argsort(rank_scores)[::-1][:TOP_REVIEWS_COUNT]
+        top_indices = np.where(evidence_mask)[0]
+        top_indices = top_indices[np.argsort(rank_scores[top_indices])[::-1]][:TOP_REVIEWS_COUNT]
 
         top_reviews = [
             {
                 "text": reviews[i]["text"],
                 "usefulness": float(rank_scores[i]),
             }
-            for i in top_review_indices
+            for i in top_indices
         ]
 
         product_summary = []

@@ -37,15 +37,20 @@ def clean_value(value: str) -> str:
     return value
 
 
-def preprocess_reddit_reviews(input_file):
-    with open(input_file, "r", encoding="utf-8") as f:
-        data = json.load(f)
+def preprocess_reddit_reviews_dict(data):
+    if isinstance(data, dict):
+        data = [data]
 
     products = []
 
     for product in data:
         texts = []
-        product_id = product.get("product").get("$oid")
+        product_obj = product.get("product")
+        if isinstance(product_obj, dict):
+            product_id = product_obj.get("$oid")
+        else:
+            product_id = product_obj
+
         reviews = product.get("review_texts", [])
         comments = product.get("comments", [])
 
@@ -75,6 +80,14 @@ def preprocess_reddit_reviews(input_file):
             })
 
     return products
+
+
+def preprocess_reddit_reviews(input_file):
+    with open(input_file, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    return preprocess_reddit_reviews_dict(data)
+
 
 
 def drop_specification_keys(data, drop_keys):
