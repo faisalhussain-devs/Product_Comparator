@@ -88,7 +88,7 @@ class RedditDataCollector:
                 for comment in post.comments:
                     if comment_count >= max_comments_per_post:
                         break
-                    if hasattr(comment, "body") and comment.body and len(comment.body.strip()) > 20:
+                    if hasattr(comment, "body") and comment.body and len(comment.body.strip()) > 30:
                         comments.append({
                             "id": comment.id,
                             "body": comment.body,

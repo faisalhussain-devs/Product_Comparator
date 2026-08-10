@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
 """
-Reddit API Product Data Collection & Model Pipeline Script
+Reddit API & GSMArena API Product Data Collection & Model Pipeline Script
 
-This script fetches Reddit data for a given product name (e.g. entered via website or CLI),
-runs the reference preprocessing pipeline, and feeds the resulting dataset into the
+This script fetches both Reddit reviews and GSMArena specifications for a product name,
+runs the reference preprocessing pipeline on both datasets, and feeds them into the
 ProductComparator aspect-based sentiment and ranking model.
 
 Usage Examples:
-    # 1. Fetch Reddit data for a product and save to JSON
-    python fetch_reddit_product_data.py --product "iPhone 15 Pro" --output iphone15_reddit_data.json
+    # 1. Fetch Reddit reviews + GSMArena specs and run through the model
+    python fetch_reddit_product_data.py --product "iPhone 15 Pro" --run-model
 
-    # 2. Fetch Reddit data, preprocess, and run through the model
-    python fetch_reddit_product_data.py --product "Samsung Galaxy S24 Ultra" --run-model
-
-    # 3. Interactive mode (prompts for product name if not provided)
-    python fetch_reddit_product_data.py
+    # 2. Fetch data and save raw/preprocessed JSON output
+    python fetch_reddit_product_data.py --product "Samsung Galaxy S24 Ultra" --output data.json --save-model-output model_out.json
 """
 
 import argparse
@@ -30,28 +27,29 @@ if str(src_dir) not in sys.path:
     sys.path.insert(0, str(src_dir))
 
 from product_comparator.reddit_collector import RedditDataCollector, fetch_and_preprocess_product_reviews
+from product_comparator.gsmarena_collector import GSMArenaCollector, fetch_and_preprocess_product_specs
 from product_comparator.preprocessing import preprocess_reddit_reviews_dict
 from product_comparator.inference import ProductComparator
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Fetch Reddit product data, preprocess using the reference pipeline, and run model inference."
+        description="Fetch Reddit reviews & GSMArena specs, preprocess datasets, and run model inference."
     )
     parser.add_argument(
         "-p", "--product",
         type=str,
-        help="Name of the product to fetch Reddit data for (e.g., 'iPhone 15 Pro', 'Sony WH-1000XM5')."
+        help="Name of the product to search (e.g., 'iPhone 15 Pro', 'Sony WH-1000XM5')."
     )
     parser.add_argument(
         "-o", "--output",
         type=str,
-        help="Output filepath to save collected Reddit data and preprocessed reviews (.json)."
+        help="Output filepath to save collected Reddit data and preprocessed reviews/specs (.json)."
     )
     parser.add_argument(
         "--run-model",
         action="store_true",
-        help="Run ProductComparator inference on the preprocessed Reddit data."
+        help="Run ProductComparator inference on the preprocessed dataset."
     )
     parser.add_argument(
         "--save-model-output",
@@ -75,49 +73,55 @@ def main():
 
     product_name = args.product
     if not product_name:
-        product_name = input("Enter product name to search on Reddit: ").strip()
+        product_name = input("Enter product name: ").strip()
 
     if not product_name:
         print("Error: Product name cannot be empty.")
         sys.exit(1)
 
-    print(f"\n=======================================================")
-    print(f"   Reddit API Product Collector & Model Pipeline       ")
-    print(f"   Target Product: '{product_name}'                   ")
-    print(f"=======================================================\n")
+    print(f"\n=========================================================================")
+    print(f"   Reddit & GSMArena Data Collection & Product Comparator Pipeline      ")
+    print(f"   Target Product: '{product_name}'                                     ")
+    print(f"=========================================================================\n")
 
-    # 1. Fetch raw product data from Reddit API
-    print(f"[Step 1/3] Fetching Reddit posts and comments for '{product_name}'...")
-    collector = RedditDataCollector()
-    raw_data = collector.fetch_product_data(
+    # 1. Fetch raw Reddit reviews
+    print(f"[Step 1/4] Fetching Reddit posts and comments for '{product_name}'...")
+    reddit_collector = RedditDataCollector()
+    raw_reddit = reddit_collector.fetch_product_data(
         product_name=product_name,
         max_posts=args.max_posts,
         max_comments_per_post=args.max_comments,
     )
+    total_comments = len(raw_reddit.get("comments", []))
+    total_reviews = len(raw_reddit.get("review_texts", []))
+    print(f" -> Fetched {total_reviews} submission entries and {total_comments} comments from Reddit.")
 
-    total_comments = len(raw_data.get("comments", []))
-    total_reviews = len(raw_data.get("review_texts", []))
-    print(f" -> Fetched {total_reviews} submission text entries and {total_comments} comments from Reddit.")
+    # 2. Fetch raw GSMArena specifications
+    print(f"\n[Step 2/4] Fetching GSMArena product specifications for '{product_name}'...")
+    gsm_collector = GSMArenaCollector()
+    raw_specs = gsm_collector.fetch_product_specs(product_name=product_name)
+    print(f" -> Fetched GSMArena device entry: '{raw_specs.get('name', product_name)}'")
 
-    # 2. Preprocess fetched data using reference pipeline
-    print(f"\n[Step 2/3] Preprocessing raw Reddit data using reference preprocessing pipeline...")
-    processed_products = preprocess_reddit_reviews_dict([raw_data])
+    # 3. Preprocess datasets using reference pipeline
+    print(f"\n[Step 3/4] Preprocessing raw Reddit reviews & GSMArena specifications...")
+    processed_reviews_list = preprocess_reddit_reviews_dict([raw_reddit])
+    preprocessed_reviews = processed_reviews_list[0]["text"] if processed_reviews_list else []
     
-    if not processed_products or not processed_products[0].get("text"):
-        print(" -> Warning: No review entries met the preprocessing criteria (>15 words after cleaning).")
-        preprocessed_reviews = []
-    else:
-        preprocessed_reviews = processed_products[0]["text"]
+    preprocessed_specs = fetch_and_preprocess_product_specs(product_name=product_name, collector=gsm_collector)
 
-    print(f" -> Preprocessing finished. Extracted {len(preprocessed_reviews)} valid review items.")
+    print(f" -> Preprocessing finished.")
+    print(f"    * Valid Review Texts (>15 words): {len(preprocessed_reviews)}")
+    print(f"    * Preprocessed Specification Keys: {len(preprocessed_specs)}")
 
     # Save output if requested
     combined_result = {
         "product_name": product_name,
-        "product_id": raw_data["product"]["$oid"],
+        "product_id": raw_reddit["product"]["$oid"],
         "preprocessed_review_count": len(preprocessed_reviews),
         "preprocessed_reviews": preprocessed_reviews,
-        "raw_reddit_data": raw_data,
+        "preprocessed_specifications": preprocessed_specs,
+        "raw_reddit_data": raw_reddit,
+        "raw_gsmarena_specs": raw_specs,
     }
 
     if args.output:
@@ -125,36 +129,32 @@ def main():
         out_path.parent.mkdir(parents=True, exist_ok=True)
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump(combined_result, f, indent=2, ensure_ascii=False)
-        print(f" -> Saved collected & preprocessed data to: {out_path}")
+        print(f" -> Saved collected & preprocessed dataset to: {out_path}")
 
-    # 3. Model Inference (if requested or by default if --run-model set)
+    # 4. Model Inference
     model_analysis = None
     if args.run_model or args.save_model_output:
         if not preprocessed_reviews:
-            print("\n[Step 3/3] Cannot run model inference: No preprocessed review evidence found.")
+            print("\n[Step 4/4] Cannot run model inference: No preprocessed review evidence found.")
         else:
-            print(f"\n[Step 3/3] Loading ProductComparator model and running inference on {len(preprocessed_reviews)} review items...")
+            print(f"\n[Step 4/4] Running ProductComparator inference on reviews & GSMArena specifications...")
             try:
                 comparator = ProductComparator()
                 model_analysis = comparator.analyze(
                     product_name=product_name,
                     reviews=preprocessed_reviews,
-                    specifications={},  # Specs can be passed here if available
+                    specifications=preprocessed_specs,
                 )
                 print(" -> Model inference successfully completed!")
                 print(f" -> Top Useful Reviews Count: {len(model_analysis.get('top_reviews', []))}")
                 print(f" -> Aspect Summary Sections: {len(model_analysis.get('product_summary', []))}")
 
-                # Print summary of top aspects found
-                aspects_found = [
-                    aspect["top_aspect_name"]
-                    for aspect in model_analysis.get("product_summary", [])
-                    if aspect.get("sub_aspects")
-                ]
-                if aspects_found:
-                    print(f" -> Aspects identified with confidence: {', '.join(aspects_found)}")
-                else:
-                    print(" -> No sub-aspects exceeded threshold criteria.")
+                # Print breakdown of specs mapped into aspect sections
+                specs_mapped_count = sum(
+                    len(section.get("specifications", {}))
+                    for section in model_analysis.get("product_summary", [])
+                )
+                print(f" -> GSMArena specifications mapped to aspect sections: {specs_mapped_count} fields.")
 
                 if args.save_model_output:
                     model_out_path = Path(args.save_model_output)
@@ -166,12 +166,13 @@ def main():
             except Exception as e:
                 print(f" -> Error during model inference: {e}")
 
-    print("\n[Done] Pipeline complete!\n")
+    print("\n[Done] Combined pipeline execution complete!\n")
     return {
-        "reddit_data": combined_result,
+        "dataset": combined_result,
         "model_analysis": model_analysis,
     }
 
 
 if __name__ == "__main__":
     main()
+
