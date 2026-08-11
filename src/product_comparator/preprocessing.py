@@ -1,7 +1,6 @@
 import json
 import re
 
-
 def clean_value(value: str) -> str:
     if not isinstance(value, str):
         return value
@@ -89,7 +88,6 @@ def preprocess_reddit_reviews(input_file):
     return preprocess_reddit_reviews_dict(data)
 
 
-
 def drop_specification_keys(data, drop_keys):
     specs = data.get("specifications")
 
@@ -102,6 +100,9 @@ def drop_specification_keys(data, drop_keys):
 
 def flatten_data(product, sep="_"):
     flat = {}
+
+    if not isinstance(product, dict):
+        return flat
 
     def process_specs(specs, parent=""):
         for entry in specs:

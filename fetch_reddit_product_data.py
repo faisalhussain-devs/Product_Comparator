@@ -26,10 +26,10 @@ src_dir = root_dir / "src"
 if str(src_dir) not in sys.path:
     sys.path.insert(0, str(src_dir))
 
-from product_comparator.reddit_collector import RedditDataCollector, fetch_and_preprocess_product_reviews
-from product_comparator.gsmarena_collector import GSMArenaCollector, fetch_and_preprocess_product_specs
-from product_comparator.preprocessing import preprocess_reddit_reviews_dict
-from product_comparator.inference import ProductComparator
+from src.product_comparator.reddit_collector import RedditDataCollector
+from src.product_comparator.gsmarena_collector import GSMArenaCollector, fetch_and_preprocess_product_specs
+from src.product_comparator.preprocessing import preprocess_reddit_reviews_dict
+from src.product_comparator.inference import ProductComparator
 
 
 def main():

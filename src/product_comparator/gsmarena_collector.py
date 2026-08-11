@@ -77,7 +77,6 @@ class GSMArenaCollector:
             or "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
         )
         self.base_url = "https://www.gsmarena.com"
-        self._local_specs_cache = None
 
     def search_product(self, product_name: str) -> Optional[str]:
         """Search GSMArena for product and return detail page URL string."""
@@ -111,7 +110,7 @@ class GSMArenaCollector:
                     parser.feed(html)
 
                     if parser.more_specification:
-                        key = spec_url.split("/")[-1].replace(".php", "")
+                        key = spec_url.split("/")[-1].replace(".php", "").split("-")[0]
                         return {
                             "_id": {"$oid": "000000000000000000000000"},
                             "key": key,
@@ -126,25 +125,6 @@ class GSMArenaCollector:
 
         return None
 
-    def _load_local_specs_db(self) -> List[Dict[str, Any]]:
-        """Loads local example specifications database if available."""
-        if self._local_specs_cache is not None:
-            return self._local_specs_cache
-
-        base_dir = Path(__file__).resolve().parents[2]
-        spec_path = base_dir / "example_data" / "Comparator.specifications.json"
-
-        if spec_path.exists():
-            try:
-                with open(spec_path, "r", encoding="utf-8") as f:
-                    self._local_specs_cache = json.load(f)
-                    return self._local_specs_cache
-            except Exception as e:
-                print(f"[GSMArenaCollector] Local spec DB error: {e}")
-
-        self._local_specs_cache = []
-        return self._local_specs_cache
-
     def fetch_product_specs(self, product_name: str) -> Dict[str, Any]:
         """
         Fetch raw product specifications for product_name.
@@ -156,82 +136,6 @@ class GSMArenaCollector:
             raw_specs = self.fetch_specs_from_url(spec_url, product_name)
             if raw_specs:
                 return raw_specs
-
-        # 2. Try matching local specifications database
-        local_db = self._load_local_specs_db()
-        norm_query = product_name.lower().replace(" ", "").replace("_", "")
-
-        for item in local_db:
-            item_name = item.get("name", "").lower().replace(" ", "").replace("_", "")
-            item_key = item.get("key", "").lower().replace(" ", "").replace("_", "")
-            if norm_query in item_name or item_name in norm_query or norm_query in item_key:
-                print(f"[GSMArenaCollector] Matched local spec DB entry for '{product_name}': {item.get('name')}")
-                return item
-
-        # 3. Fallback default specifications structure if offline or unlisted
-        print(f"[GSMArenaCollector] Generating structured specification defaults for '{product_name}'...")
-        return {
-            "_id": {"$oid": "000000000000000000000000"},
-            "key": product_name.lower().replace(" ", "_"),
-            "name": product_name,
-            "specification": {
-                "more_specification": [
-                    {
-                        "title": "Battery",
-                        "data": [
-                            {"title": "Type", "data": ["Li-Ion, non-removable"]},
-                            {"title": "Charging", "data": ["Wired, PD3.0, Wireless charging"]},
-                        ],
-                    },
-                    {
-                        "title": "Body",
-                        "data": [
-                            {"title": "Dimensions", "data": ["146.6 x 70.6 x 8.25 mm"]},
-                            {"title": "Weight", "data": ["187 g"]},
-                            {"title": "Build", "data": ["Glass front, glass back, titanium frame"]},
-                        ],
-                    },
-                    {
-                        "title": "Display",
-                        "data": [
-                            {"title": "Type", "data": ["LTPO Super Retina XDR OLED, 120Hz, HDR10, Dolby Vision"]},
-                            {"title": "Size", "data": ["6.1 inches"]},
-                            {"title": "Resolution", "data": ["1179 x 2556 pixels"]},
-                            {"title": "Protection", "data": ["Ceramic Shield glass"]},
-                        ],
-                    },
-                    {
-                        "title": "Platform",
-                        "data": [
-                            {"title": "OS", "data": ["iOS / Android"]},
-                            {"title": "CPU", "data": ["Hexa-core / Octa-core High Performance CPU"]},
-                            {"title": "GPU", "data": ["6-core GPU / Adreno GPU"]},
-                        ],
-                    },
-                    {
-                        "title": "Main Camera",
-                        "data": [
-                            {"title": "Triple", "data": ["48 MP wide, 12 MP telephoto, 12 MP ultrawide"]},
-                            {"title": "Video", "data": ["4K@24/25/30/60fps, 1080p@30/60/120/240fps"]},
-                        ],
-                    },
-                    {
-                        "title": "Selfie camera",
-                        "data": [
-                            {"title": "Single", "data": ["12 MP wide"]},
-                            {"title": "Video", "data": ["4K@24/25/30/60fps"]},
-                        ],
-                    },
-                    {
-                        "title": "Launch",
-                        "data": [
-                            {"title": "Announced", "data": ["Flagship release"]},
-                        ],
-                    },
-                ],
-            },
-        }
-
 
 def fetch_and_preprocess_product_specs(
     product_name: str,
@@ -249,6 +153,12 @@ def fetch_and_preprocess_product_specs(
         drop_columns = DROP_COLUMNS
 
     raw_specs = collector.fetch_product_specs(product_name)
+    if not raw_specs:
+        print(
+            f"[GSMArenaCollector] No specifications found "
+            f"for '{product_name}'."
+        )
+        return {}
     flat_specs = flatten_data(raw_specs)
 
     specs_obj = {"specifications": flat_specs}

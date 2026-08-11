@@ -44,9 +44,6 @@ class ProductComparator:
         relevance_scores = np.asarray([product_relevance(review["text"], product_name) for review in valid_reviews])
         review_texts = [f"Main product: {product_name}. Review: {review['text']}" for review in valid_reviews]
 
-        if not review_texts:
-            raise ValueError("Product contains no valid reviews.")
-
         rank_inputs = self.ranker.tokenizer(
             review_texts,
             padding=True,
@@ -74,7 +71,7 @@ class ProductComparator:
                 "status": "insufficient_review_evidence",
             }
 
-        selected_reviews = [reviews[i] for i in np.where(evidence_mask)[0]]
+        selected_reviews = [valid_reviews[i] for i in np.where(evidence_mask)[0]]
         selected_texts = [f"Main product: {product_name}. Review: {review['text']}" for review in selected_reviews]
 
         absa_inputs = self.absa.tokenizer(
@@ -115,7 +112,7 @@ class ProductComparator:
 
         top_reviews = [
             {
-                "text": reviews[i]["text"],
+                "text": valid_reviews[i]["text"],
                 "usefulness": float(rank_scores[i]),
             }
             for i in top_indices

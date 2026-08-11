@@ -19,13 +19,13 @@ def run_pipeline_for_product(
     2. Calls GSMArena API/fetcher to get & flatten product specifications.
     3. Feeds preprocessed reviews AND preprocessed specifications to ProductComparator inference model.
     """
-    print(f"=== Starting Data Collection Pipeline for Product: '{product_name}' ===")
+    print(f" Starting Data Collection Pipeline for Product: '{product_name}' ")
 
     if use_live_apis:
         print(f"[1/4] Calling Reddit API to collect reviews for '{product_name}'...")
         reddit_result = fetch_and_preprocess_product_reviews(product_name=product_name)
         review_data = reddit_result["reviews"]
-        print(f" -> Extracted {len(review_data)} preprocessed review items (>15 words).")
+        print(f" -> Extracted {len(review_data)} preprocessed review items .")
 
         print(f"[2/4] Calling GSMArena API to collect specifications for '{product_name}'...")
         if specifications is None:
@@ -58,7 +58,7 @@ def run_pipeline_for_product(
         specifications=specifications or {},
     )
 
-    print("=== [4/4] Pipeline Execution Finished Successfully ===")
+    print("[4/4] Pipeline Execution Finished Successfully")
     return analysis_result
 
 
@@ -66,4 +66,3 @@ if __name__ == "__main__":
     target_product = sys.argv[1] if len(sys.argv) > 1 else "iPhone 15 Pro"
     res = run_pipeline_for_product(product_name=target_product, use_live_apis=True)
     print(res)
-

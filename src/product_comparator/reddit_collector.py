@@ -4,9 +4,9 @@ import hashlib
 import urllib.request
 import urllib.parse
 from typing import List, Dict, Any, Optional
-
+from .config import REDDIT_MAX_POSTS, REDDIT_MAX_COMMENTS_PER_POST
 import praw
-from .preprocessing import clean_value, preprocess_reddit_reviews_dict
+from .preprocessing import preprocess_reddit_reviews_dict
 
 
 DEFAULT_SUBREDDITS = [
@@ -60,8 +60,8 @@ class RedditDataCollector:
     def fetch_via_praw(
         self,
         product_name: str,
-        max_posts: int = 15,
-        max_comments_per_post: int = 15,
+        max_posts: int = REDDIT_MAX_POSTS,
+        max_comments_per_post: int = REDDIT_MAX_COMMENTS_PER_POST,
         subreddits: Optional[List[str]] = None,
     ) -> Dict[str, Any]:
         """Fetch posts and comments using PRAW."""
@@ -91,10 +91,8 @@ class RedditDataCollector:
                     if hasattr(comment, "body") and comment.body and len(comment.body.strip()) > 30:
                         comments.append({
                             "id": comment.id,
-                            "body": comment.body,
+                            "body": post.title+". "+comment.body,
                             "ups": getattr(comment, "score", 0) or getattr(comment, "ups", 0),
-                            "author": str(comment.author) if comment.author else "[deleted]",
-                            "post_title": post.title,
                         })
                         comment_count += 1
         except Exception as e:
@@ -110,11 +108,11 @@ class RedditDataCollector:
     def fetch_via_public_api(
         self,
         product_name: str,
-        max_posts: int = 15,
-        max_comments_per_post: int = 15,
+        max_posts: int = REDDIT_MAX_POSTS,
+        max_comments_per_post: int = REDDIT_MAX_COMMENTS_PER_POST,
     ) -> Dict[str, Any]:
         """Fallback method fetching public Reddit search JSON when PRAW keys are unavailable."""
-        query_encoded = urllib.parse.quote(f"{product_name} review")
+        query_encoded = urllib.parse.quote(f"{product_name} review OR experience OR thoughts")
         url = f"https://www.reddit.com/search.json?q={query_encoded}&sort=relevance&limit={max_posts}"
 
         req = urllib.request.Request(
@@ -156,14 +154,11 @@ class RedditDataCollector:
                                             for c_item in comm_children[:max_comments_per_post]:
                                                 c_body = c_item.get("data", {}).get("body")
                                                 c_ups = c_item.get("data", {}).get("ups", 0)
-                                                c_author = c_item.get("data", {}).get("author", "[deleted]")
                                                 if c_body and len(c_body.strip()) > 20:
                                                     comments.append({
                                                         "id": c_item.get("data", {}).get("id", ""),
-                                                        "body": c_body,
+                                                        "body": title + ". " + c_body,
                                                         "ups": c_ups,
-                                                        "author": c_author,
-                                                        "post_title": title,
                                                     })
                             except Exception:
                                 pass
@@ -180,8 +175,8 @@ class RedditDataCollector:
     def fetch_product_data(
         self,
         product_name: str,
-        max_posts: int = 15,
-        max_comments_per_post: int = 15,
+        max_posts: int = REDDIT_MAX_POSTS,
+        max_comments_per_post: int = REDDIT_MAX_COMMENTS_PER_POST,
         subreddits: Optional[List[str]] = None,
     ) -> Dict[str, Any]:
         """
@@ -208,69 +203,17 @@ class RedditDataCollector:
             return data
 
         # If live API fetch returned empty (e.g. 403 blocked or offline), use sample benchmark dataset
-        print(f"[RedditCollector] Live Reddit API fetch returned no results for '{product_name}'. Loading fallback sample data...")
-        return self._load_fallback_sample_data(product_name)
-
-    def _load_fallback_sample_data(self, product_name: str) -> Dict[str, Any]:
-        """Loads sample product reviews from local benchmark dataset as fallback."""
-        from pathlib import Path
-        base_dir = Path(__file__).resolve().parents[2]
-        sample_file = base_dir / "example_data" / "Comparator.reviews.json"
-
-        if sample_file.exists():
-            try:
-                with open(sample_file, "r", encoding="utf-8") as f:
-                    sample_data = json.load(f)
-                    if isinstance(sample_data, list) and len(sample_data) > 0:
-                        first_item = sample_data[0]
-                        return {
-                            "product": {"$oid": self._generate_product_oid(product_name)},
-                            "name": product_name,
-                            "comments": first_item.get("comments", []),
-                            "review_texts": first_item.get("review_texts", []),
-                        }
-            except Exception as e:
-                print(f"[RedditCollector] Error loading sample dataset: {e}")
-
-        # Basic fallback data if sample file is missing
-        return {
-            "product": {"$oid": self._generate_product_oid(product_name)},
-            "name": product_name,
-            "comments": [
-                {
-                    "id": "c1",
-                    "body": f"I have been using the {product_name} for three months now. The battery life easily lasts a day and a half with heavy usage, and charging speed is very fast.",
-                    "ups": 45,
-                    "author": "tech_reviewer",
-                    "post_title": f"Long-term review of {product_name}",
-                },
-                {
-                    "id": "c2",
-                    "body": f"The build quality of the {product_name} is premium and durable. However, the camera processing can sometimes overexpose bright outdoor shots.",
-                    "ups": 28,
-                    "author": "gadget_guy",
-                    "post_title": f"{product_name} display and camera thoughts",
-                },
-                {
-                    "id": "c3",
-                    "body": f"Software performance on {product_name} is silky smooth. Zero lag when multitasking or playing graphic heavy games, very satisfied with value for money.",
-                    "ups": 19,
-                    "author": "mobile_user",
-                    "post_title": f"Is {product_name} worth it in 2024?",
-                },
-            ],
-            "review_texts": [
-                f"Full review of {product_name}: High refresh rate display is sharp, battery life is solid, and speaker audio is crisp.",
-            ],
-        }
-
-
+        print(
+            f"[RedditCollector] Live Reddit API fetch returned no results "
+            f"for '{product_name}'."
+        )
+        return None
 
 def fetch_and_preprocess_product_reviews(
     product_name: str,
     collector: Optional[RedditDataCollector] = None,
-    max_posts: int = 20,
-    max_comments_per_post: int = 20,
+    max_posts: int = REDDIT_MAX_POSTS,
+    max_comments_per_post: int = REDDIT_MAX_COMMENTS_PER_POST,
 ) -> Dict[str, Any]:
     """
     Convenience function: Fetches raw Reddit data for product_name and preprocesses it.
@@ -284,12 +227,14 @@ def fetch_and_preprocess_product_reviews(
         max_posts=max_posts,
         max_comments_per_post=max_comments_per_post,
     )
-
-    processed_list = preprocess_reddit_reviews_dict([raw_data])
-    reviews = processed_list[0]["text"] if processed_list else []
+    if raw_data:
+        processed_list = preprocess_reddit_reviews_dict([raw_data])
+        reviews = processed_list[0]["text"] if processed_list else []
+    else:
+        reviews = []
 
     return {
-        "product_id": raw_data["product"]["$oid"],
+        "product_id": raw_data["product"]["$oid"] if raw_data else None,
         "product_name": product_name,
         "reviews": reviews,
         "raw_data": raw_data,
