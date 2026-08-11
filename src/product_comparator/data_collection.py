@@ -1,7 +1,11 @@
 import sys
 from pathlib import Path
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 from .config import DROP_COLUMNS
+
 from .preprocessing import preprocess_reddit_reviews, preprocess_products
 from .reddit_collector import fetch_and_preprocess_product_reviews
 from .gsmarena_collector import fetch_and_preprocess_product_specs
