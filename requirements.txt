@@ -1,0 +1,22 @@
+# Core numerical / ML stack
+numpy>=1.26,<3
+scipy>=1.11,<2
+scikit-learn>=1.4,<2
+
+# Deep learning / Transformers
+# Match these with the versions used to train/export the published checkpoints.
+torch>=2.2,<3
+transformers>=4.40,<5
+huggingface-hub>=0.23,<1
+
+# ONNX inference
+onnxruntime>=1.18,<2
+
+# Data collection / parsing
+requests>=2.31,<3
+beautifulsoup4>=4.12,<5
+
+# Utilities used by the runtime / notebooks
+tqdm>=4.66,<5
+matplotlib>=3.8,<4
+seaborn>=0.13,<1

@@ -24,7 +24,6 @@ venv/
 *.safetensors
 
 # Arrays / embeddings
-*.npy
 
 # Generated outputs
 *.jsonl
@@ -33,3 +32,6 @@ venv/
 useless*/
 sample_reveiws_model/
 label_embeddings/
+web_app.py
+templates/
+static/

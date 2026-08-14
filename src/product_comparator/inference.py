@@ -57,7 +57,7 @@ class ProductComparator:
             batch_size=RANK_BATCH_SIZE,
         )
 
-        relevant_mask = relevance_scores > 0.4
+        relevant_mask = relevance_scores > 0.7
         useful_mask = rank_scores > 7.0
         evidence_mask = relevant_mask & useful_mask
 
