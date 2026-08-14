@@ -90,8 +90,7 @@ class RedditDataCollector:
                         break
                     if hasattr(comment, "body") and comment.body and len(comment.body.strip()) > 30:
                         comments.append({
-                            "id": comment.id,
-                            "body": post.title+". "+comment.body,
+                            "body": post.title + ". " + comment.body,
                             "ups": getattr(comment, "score", 0) or getattr(comment, "ups", 0),
                         })
                         comment_count += 1
@@ -156,10 +155,10 @@ class RedditDataCollector:
                                                 c_ups = c_item.get("data", {}).get("ups", 0)
                                                 if c_body and len(c_body.strip()) > 20:
                                                     comments.append({
-                                                        "id": c_item.get("data", {}).get("id", ""),
                                                         "body": title + ". " + c_body,
                                                         "ups": c_ups,
                                                     })
+
                             except Exception:
                                 pass
         except Exception as e:

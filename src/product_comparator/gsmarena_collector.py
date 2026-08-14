@@ -195,63 +195,9 @@ class GSMArenaCollector:
             "key": product_name.lower().replace(" ", "_"),
             "name": product_name,
             "specification": {
-                "more_specification": [
-                    {
-                        "title": "Battery",
-                        "data": [
-                            {"title": "Type", "data": ["Li-Ion, non-removable"]},
-                            {"title": "Charging", "data": ["Wired, PD3.0, Wireless charging"]},
-                        ],
-                    },
-                    {
-                        "title": "Body",
-                        "data": [
-                            {"title": "Dimensions", "data": ["146.6 x 70.6 x 8.25 mm"]},
-                            {"title": "Weight", "data": ["187 g"]},
-                            {"title": "Build", "data": ["Glass front, glass back, titanium frame"]},
-                        ],
-                    },
-                    {
-                        "title": "Display",
-                        "data": [
-                            {"title": "Type", "data": ["LTPO Super Retina XDR OLED, 120Hz, HDR10, Dolby Vision"]},
-                            {"title": "Size", "data": ["6.1 inches"]},
-                            {"title": "Resolution", "data": ["1179 x 2556 pixels"]},
-                            {"title": "Protection", "data": ["Ceramic Shield glass"]},
-                        ],
-                    },
-                    {
-                        "title": "Platform",
-                        "data": [
-                            {"title": "OS", "data": ["iOS / Android"]},
-                            {"title": "CPU", "data": ["Hexa-core / Octa-core High Performance CPU"]},
-                            {"title": "GPU", "data": ["6-core GPU / Adreno GPU"]},
-                        ],
-                    },
-                    {
-                        "title": "Main Camera",
-                        "data": [
-                            {"title": "Triple", "data": ["48 MP wide, 12 MP telephoto, 12 MP ultrawide"]},
-                            {"title": "Video", "data": ["4K@24/25/30/60fps, 1080p@30/60/120/240fps"]},
-                        ],
-                    },
-                    {
-                        "title": "Selfie camera",
-                        "data": [
-                            {"title": "Single", "data": ["12 MP wide"]},
-                            {"title": "Video", "data": ["4K@24/25/30/60fps"]},
-                        ],
-                    },
-                    {
-                        "title": "Launch",
-                        "data": [
-                            {"title": "Announced", "data": ["Flagship release"]},
-                        ],
-                    },
-                ],
+                "more_specification": [],
             },
         }
-
 
 
 def fetch_and_preprocess_product_specs(
